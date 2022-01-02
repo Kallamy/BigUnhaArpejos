@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablatura</title>
+</head>
+<style>
+    * {
+        user-select: none;
+        padding: 0;
+        margin: 0;
+    }
+    body {
+
+    }
+    .container {
+        width: 100%;
+        height: 500px;
+        background-color: lightslategray;
+    }
+    .area {
+        background-color: #ddd;
+        width: 100%;
+        height: 500px;
+        padding: 25px;
+    }
+    .fretboard {
+        margin: auto;
+        width: 700px;
+        height: 150px;
+        margin-top: 25px;
+        
+        padding: 10px;
+        background-color:#eee;
+    }
+    .wires {
+        position: absolute;
+        z-index: 1;
+    }
+    .wire {
+        height: 130px;
+        width: 4px;
+        background-color: sienna;
+        float: left;
+        z-index: 1;
+        margin: 20px;
+        margin-top: 10px;
+    }
+    .strings {
+        margin-top: 5px;
+        z-index: 9;
+    }
+    .string {
+        width: 100%;
+        height: 2px;
+        background-color: black;
+        display: flex;
+        flex-direction: row-reverse;
+        margin-top: 20px;
+        margin-left: -5px;
+        position: relative;
+        z-index: 99;
+    }
+    .fret {
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        margin-top: -10px;
+        margin-right: 23px;
+        z-index: 2;
+        font-size: 13px;
+        text-align: center;
+        color: whitesmoke
+
+    }
+    .fret.red {
+        background: red;
+        cursor: pointer;
+
+    }
+    .fret.blue {
+        background: blue;
+        cursor: pointer;
+    }
+    .fret.playing {
+        animation: tune 1s;
+
+    }
+
+    .menu {
+        margin: auto;
+        width: 700px;
+        height: 140px;
+        padding: 10px;
+        background-color: #aaa;
+        
+    }
+    .chordsList {
+        display: flex;
+        list-style-type: none;
+        margin-left: 50px;
+    }
+    .chordItem {
+        display: block;
+        width: 30px;
+        margin-left: 7px;
+        text-align: center;
+        padding: 5px;
+    }
+    fieldset  {
+        background-color: #ccc;
+        padding: 7px;
+    }
+    legend {
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .showLimit {
+        width: 30px;
+        padding: 7px;
+    }
+    #showNumber {
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        font-weight: bold;
+    }
+    #goLeft,
+    #goRight {
+        height: 30px;
+        width: 20px;
+    }
+    .btnPlay{
+        padding: 5px;
+    }
+
+    .tabArea {
+        
+        margin: auto;
+        
+        width: 700px;
+        height: 100px;
+        border-left: 2px solid black;
+        border-right: 2px solid black;
+        padding: 0;
+        margin-top: 25px;
+    }
+    .tabTitle {
+        position: absolute;
+        line-height: 36px;
+        margin-top: -5px;
+        margin-left: 13px;
+        font-size: 30px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+    }
+    .line {
+        width: 100%;
+        height: 2px;
+        background-color: black;
+        display: flex;
+        flex-direction: row;
+        margin-top: 15px;
+        margin-bottom: 10px;
+        margin-left: 0px;
+        position: relative;
+        z-index: 99;
+       
+    }
+    .tabSequence {
+        position: relative;
+        display: flex;
+        bottom: 124px;
+    
+        left: 40px;
+    }
+    .tabNum {
+        font-weight: bold;
+        font-size: 20px;
+        margin-left: 21px;
+    }
+    .tabNum.playing {
+        animation: bright 1s;
+    }
+
+    @keyframes tune {
+        0%  {box-shadow: 0 0 5px black}
+        25% {box-shadow: 0 0 7px black;  transform: scale(1.1)}
+        50%  {box-shadow: 0 0 10px black; transform: scale(1.2)}
+        75% {box-shadow: 0 0 7px black; transform: scale(1.1)}
+        100%  {box-shadow: 0 0 5px black}
+    }
+    @keyframes bright {
+        0%  {text-shadow: 0 0 5px gold}
+        25% {text-shadow: 0 0 7px gold}
+        50%  {text-shadow: 0 0 10px gold; color: gray; }
+        75% {text-shadow: 0 0 7px gold}
+        100%  {text-shadow: 0 0 5px gold}
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="area">
+            <div class="menu">
+
+                <fieldset>
+                    <legend>Acordes</legend>
+                    <div class="slectors">
+                        <select id="typeSelector">
+                            <option value="major">maior</option>
+                            <option value="minor">menor</option>
+                        </select>
+                        <label for="sevenCheck">com sétima</label>
+                        <input type="checkbox" name="" id="sevenCheck">
+
+                      
+                    </div>
+                    <hr>
+                    <ul class="chordsList">
+                        <li><a href="#" class="chordItem">A</a></li>
+                        <li><a href="#" class="chordItem">A#</a></li>
+                        <li><a href="#" class="chordItem">B</a></li>
+                        <li><a href="#" class="chordItem">C</a></li>
+                        <li><a href="#" class="chordItem">C#</a></li>
+                        <li><a href="#" class="chordItem">D</a></li>
+                        <li><a href="#" class="chordItem">D#</a></li>
+                        <li><a href="#" class="chordItem">E</a></li>
+                        <li><a href="#" class="chordItem">F</a></li>
+                        <li><a href="#" class="chordItem">F#</a></li>
+                        <li><a href="#" class="chordItem">G</a></li>
+                        <li><a href="#" class="chordItem">G#</a></li>
+                    </ul>
+                    <hr>
+                   
+                </fieldset>
+                <fieldset>
+                    <label>Número de casas:</label> <br>
+                    <button id="goLeft"><b><</b></button> 
+                    <input type="number" id="showNumber" min="0" max="9" value="7"> 
+                    <button id="goRight"><b>></b></button> 
+                    <button class="btnPlay" onclick="playSequence()"> ▶</button>
+                </fieldset>
+                <br>
+
+
+            </div>
+            <div class="fretboard">
+                <div class="wires">
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                    <div class="wire"></div>
+                </div>
+                <div class="strings">
+                    <div class="string" data-id="6">
+                        <div class="fret" data-note="fá" data-pos="1"></div> 
+                        <div class="fret" data-note="fá#" data-pos="2"></div> 
+                        <div class="fret" data-note="sol" data-pos="3"></div> 
+                        <div class="fret" data-note="sol#" data-pos="4"></div> 
+                        <div class="fret" data-note="lá" data-pos="5"></div> 
+                        <div class="fret" data-note="lá#" data-pos="6"></div> 
+                        <div class="fret" data-note="si" data-pos="7"></div> 
+                        <div class="fret" data-note="dó" data-pos="8"></div> 
+                        <div class="fret" data-note="dó#" data-pos="9"></div> 
+                        <div class="fret" data-note="ré" data-pos="10"></div> 
+                        <div class="fret" data-note="ré#" data-pos="11"></div> 
+                        <div class="fret" data-note="mi" data-pos="12"></div> 
+                        <div class="fret" data-note="fá" data-pos="13"></div> 
+                        <div class="fret" data-note="fá#" data-pos="14"></div> 
+                    </div>
+                    <div class="string" data-id="5">
+                        <div class="fret" data-note="lá#" data-pos="1"></div> 
+                        <div class="fret" data-note="si" data-pos="2"></div> 
+                        <div class="fret" data-note="dó" data-pos="3"></div> 
+                        <div class="fret" data-note="dó#" data-pos="4"></div> 
+                        <div class="fret" data-note="ré" data-pos="5"></div> 
+                        <div class="fret" data-note="ré#" data-pos="6"></div> 
+                        <div class="fret" data-note="mi" data-pos="7"></div> 
+                        <div class="fret" data-note="fá" data-pos="8"></div> 
+                        <div class="fret" data-note="fá#" data-pos="9"></div> 
+                        <div class="fret" data-note="sol" data-pos="10"></div> 
+                        <div class="fret" data-note="sol#" data-pos="11"></div> 
+                        <div class="fret" data-note="lá" data-pos="12"></div> 
+                        <div class="fret" data-note="lá#" data-pos="13"></div> 
+                        <div class="fret" data-note="si" data-pos="14"></div> 
+                    </div>
+                    <div class="string" data-id="4">
+                        <div class="fret" data-note="ré#" data-pos="1"></div> 
+                        <div class="fret" data-note="mi" data-pos="2"></div> 
+                        <div class="fret" data-note="fá" data-pos="3"></div> 
+                        <div class="fret" data-note="fá#" data-pos="4"></div> 
+                        <div class="fret" data-note="sol" data-pos="5"></div> 
+                        <div class="fret" data-note="sol#" data-pos="6"></div> 
+                        <div class="fret" data-note="lá" data-pos="7"></div> 
+                        <div class="fret" data-note="lá#" data-pos="8"></div> 
+                        <div class="fret" data-note="si" data-pos="9"></div> 
+                        <div class="fret" data-note="dó" data-pos="10"></div> 
+                        <div class="fret" data-note="dó#" data-pos="11"></div> 
+                        <div class="fret" data-note="ré" data-pos="12"></div> 
+                        <div class="fret" data-note="ré#" data-pos="13"></div> 
+                        <div class="fret" data-note="mi" data-pos="14"></div> 
+                    </div>
+                    <div class="string" data-id="3">
+                        <div class="fret" data-note="sol#" data-pos="1"></div> 
+                        <div class="fret" data-note="lá" data-pos="2"></div> 
+                        <div class="fret" data-note="lá#" data-pos="3"></div> 
+                        <div class="fret" data-note="si" data-pos="4"></div> 
+                        <div class="fret" data-note="dó" data-pos="5"></div> 
+                        <div class="fret" data-note="dó#" data-pos="6"></div> 
+                        <div class="fret" data-note="ré" data-pos="7"></div> 
+                        <div class="fret" data-note="ré#" data-pos="8"></div> 
+                        <div class="fret" data-note="mi" data-pos="9"></div> 
+                        <div class="fret" data-note="fá" data-pos="10"></div> 
+                        <div class="fret" data-note="fá#" data-pos="11"></div> 
+                        <div class="fret" data-note="sol" data-pos="12"></div> 
+                        <div class="fret" data-note="sol#" data-pos="13"></div> 
+                        <div class="fret" data-note="lá" data-pos="14"></div> 
+                    </div>
+                    <div class="string" data-id="2">
+                        <div class="fret" data-note="dó" data-pos="1"></div> 
+                        <div class="fret" data-note="dó#" data-pos="2"></div> 
+                        <div class="fret" data-note="ré" data-pos="3"></div> 
+                        <div class="fret" data-note="ré#" data-pos="4"></div> 
+                        <div class="fret" data-note="mi" data-pos="5"></div> 
+                        <div class="fret" data-note="fá" data-pos="6"></div> 
+                        <div class="fret" data-note="fá#" data-pos="7"></div> 
+                        <div class="fret" data-note="sol" data-pos="8"></div> 
+                        <div class="fret" data-note="sol#" data-pos="9"></div> 
+                        <div class="fret" data-note="lá" data-pos="10"></div> 
+                        <div class="fret" data-note="lá#" data-pos="11"></div> 
+                        <div class="fret" data-note="si" data-pos="12"></div> 
+                        <div class="fret" data-note="dó" data-pos="13"></div> 
+                        <div class="fret" data-note="dó#" data-pos="14"></div> 
+                    </div>
+                    <div class="string" data-id="1">
+                        <div class="fret" data-note="fá" data-pos="1"></div> 
+                        <div class="fret" data-note="fá#" data-pos="2"></div> 
+                        <div class="fret" data-note="sol" data-pos="3"></div> 
+                        <div class="fret" data-note="sol#" data-pos="4"></div> 
+                        <div class="fret" data-note="lá" data-pos="5"></div> 
+                        <div class="fret" data-note="lá#" data-pos="6"></div> 
+                        <div class="fret" data-note="si" data-pos="7"></div> 
+                        <div class="fret" data-note="dó" data-pos="8"></div> 
+                        <div class="fret" data-note="dó#" data-pos="9"></div> 
+                        <div class="fret" data-note="ré" data-pos="10"></div> 
+                        <div class="fret" data-note="ré#" data-pos="11"></div> 
+                        <div class="fret" data-note="mi" data-pos="12"></div> 
+                        <div class="fret" data-note="fá" data-pos="13"></div> 
+                        <div class="fret" data-note="fá#" data-pos="14"></div> 
+                    </div>
+                </div>
+            </div>
+            <div class="tabArea">
+                <div class="tabTitle">
+                    T <br> A <br> B
+                </div>
+                <div class="line" data-id="6"></div>
+                <div class="line" data-id="5"></div>
+                <div class="line" data-id="4"></div>
+                <div class="line" data-id="3"></div>
+                <div class="line" data-id="2"></div>
+                <div class="line" data-id="1"></div>
+                <div class="tabSequence"></div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="script.js"></script>
+</html>
