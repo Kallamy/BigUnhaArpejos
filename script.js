@@ -95,12 +95,13 @@ var eh13 = new Audio("./audio/eh13.wav");
 var eh14 = new Audio("./audio/eh14.wav");
 
 
-
+hasLoad = false;
 chord = "G7";
 
+setChord();
 
-
-limitStart = 1
+limitStart = 2;
+limitValue = 6;
 
 showNumber = document.querySelector("#showNumber");
 btnRight = document.querySelector("#goRight");
@@ -108,12 +109,16 @@ btnLeft = document.querySelector("#goLeft");
 
 limitValue = showNumber.value;
 btnRight.addEventListener("click", () => {
-    limitStart --
-    setRange();
+    if(limits[0] >= 2) {
+        limitStart --
+        setRange();
+    }
 });
 btnLeft.addEventListener("click", () => {
-    limitStart ++
-    setRange();
+    if(limits[1] <= 14) {
+        limitStart ++
+        setRange();
+    }
 });
 
 showNumber.addEventListener("change", () => {
@@ -122,10 +127,8 @@ showNumber.addEventListener("change", () => {
 });
 
 setRange();
-console.log(limits)
-limits = [3 , 3]
 
-chordItens = document.querySelectorAll(".chordItem")
+chordItens = document.querySelectorAll(".chordItem");
 selectedNotes = document.querySelectorAll(".fret.red");
 
 chordItens.forEach((chordItem) => {
@@ -137,18 +140,18 @@ chordItens.forEach((chordItem) => {
         clearNotes();
         setNotes();
         for(let i = 0; i < chordItens.length; i++) {
-            chordItens[i].style.fontSize = "16px";
-            chordItens[i].style.marginTop = "0";
+            chordItens[i].classList.remove("selected")
         }
         
-        chordItem.style.marginTop = "3px";
-        chordItem.style.fontweight = "700"
-
+       chordItem.classList.add("selected")
         
     });
+    if(chordItem.innerText == chord) {
+        chordItem.classList.add("selected");
+    }
 }) 
  
-fund = "";
+fund = "Dm7";
 
 tabSequence = document.querySelector(".tabSequence");
 
@@ -271,21 +274,31 @@ typeSelctor = document.querySelector("#typeSelector").addEventListener("change",
 sevenCheck = document.querySelector("#sevenCheck").addEventListener("change", setChord);
 
 
-
 function setChord() {
 
-    
+    chordItens = document.querySelectorAll(".chordItem");
     chordType = document.querySelector("#typeSelector");
     sevenCheck = document.querySelector("#sevenCheck");
 
     allChords = ["C", "D#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B","Cm", "D#m", "Dm", "D#m", "Em", "Fm", "F#m", "Gm", "G#m", "Am", "A#m", "Bm","C7", "D#7", "D7", "D#7", "E7", "F7", "F#7", "G7", "G#7", "A7", "A#7", "B7","Cm7", "D#m7", "Dm7", "D#m7", "Em7", "Fm7", "F#m7", "Gm7", "G#m7", "Am7", "A#m7", "Bm7"]
 
     for(var i = 0; i < chordItens.length; i++) {
+        
         if(sevenCheck.checked == false) {
             if(chordType.value == "major") {
                 chordItens[i].innerText = allChords[i];
             } else if (chordType.value == "minor") {
                 chordItens[i].innerText = allChords[i+12];
+                console.log('bug.')
+            }
+            if(!hasLoad) {
+                if(!chord.includes('m')) {
+                    chordItens[i].innerText = allChords[i];
+                    chordType.value = "major";
+                } else if (chord.includes('m')) {
+                    chordItens[i].innerText = allChords[i+12];
+                    chordType.value = "minor";
+                }
             }
         } else {
             if(chordType.value == "major") {
@@ -293,9 +306,31 @@ function setChord() {
             } else if (chordType.value == "minor") {
                 chordItens[i].innerText = allChords[i+36];
             }
+            if(!hasLoad) {
+                if(!chord.includes('m')) {
+                    chordItens[i].innerText = allChords[i+24];
+                } else if (chord.includes('m')) {
+                    chordItens[i].innerText = allChords[i+36];
+                }
+            }
+           
         }
+        if(!hasLoad) {
+            if(chord.includes("7")) {
+                sevenCheck.checked = true;
+                if(!chord.includes('m')) {
+                    chordItens[i].innerText = allChords[i+24];
+                } else if (chord.includes('m')) {
+                    chordItens[i].innerText = allChords[i+36];
+                }
+                
+            } else {
+                sevenCheck.checked = false;
+        
+            }
+       }
     }
-    
+    hasLoad = true;
 }
 
 
@@ -344,6 +379,8 @@ function setRange() {
         console.log[limits]
         clearNotes();
         setNotes();
+        if(limits[1] < 14) {
+        }
 }
 
 function setSound(string, pos){ 
@@ -523,7 +560,7 @@ function setSound(string, pos){
             g14.currentTime = 0;
             g14.play();
         }
-    } else if(string ==2) {
+    } else if(string == 2) {
         if(pos == 1) {
             b1.currentTime = 0;
             b1.play();

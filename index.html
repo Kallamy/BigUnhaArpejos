@@ -17,7 +17,7 @@
     }
     .container {
         width: 100%;
-        height: 500px;
+        height: 100vh;
         background-color: lightslategray;
     }
     .area {
@@ -92,7 +92,7 @@
     .menu {
         margin: auto;
         width: 700px;
-        height: 140px;
+        height: 160px;
         padding: 10px;
         background-color: #aaa;
         
@@ -100,28 +100,42 @@
     .chordsList {
         display: flex;
         list-style-type: none;
-        margin-left: 50px;
+        margin-left: 70px;
     }
     .chordItem {
         display: block;
         width: 30px;
+        color: black;
         margin-left: 7px;
         text-align: center;
         padding: 5px;
     }
+    .chordItem.selected {
+        font-weight: 900;
+        margin-top: 5px;
+
+    }
     fieldset  {
         background-color: #ccc;
-        padding: 7px;
+        padding: 5px 15px;
+    }
+    fieldset span {
+        line-height: 30px;
     }
     legend {
         font-weight: bold;
         text-align: center;
         text-transform: uppercase;
     }
-
-    .showLimit {
-        width: 30px;
-        padding: 7px;
+    
+    .playArea {
+        width: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .playArea label {
+        display: block;
     }
     #showNumber {
         height: 30px;
@@ -132,10 +146,17 @@
     #goLeft,
     #goRight {
         height: 30px;
-        width: 20px;
+        width: 40px;
+        font-size: 30px;
+        line-height: 15px;
+        margin-top: 5px;
     }
     .btnPlay{
         padding: 5px;
+        float: right;
+        width: 30px;
+        height: 30px;
+        margin-left: 10px;
     }
 
     .tabArea {
@@ -209,7 +230,7 @@
 
                 <fieldset>
                     <legend>Acordes</legend>
-                    <div class="slectors">
+                    <div class="selectors">
                         <select id="typeSelector">
                             <option value="major">maior</option>
                             <option value="minor">menor</option>
@@ -223,7 +244,7 @@
                     <ul class="chordsList">
                         <li><a href="#" class="chordItem">A</a></li>
                         <li><a href="#" class="chordItem">A#</a></li>
-                        <li><a href="#" class="chordItem">B</a></li>
+                        <li><a href="#" class="chordItem" selected="selected">B</a></li>
                         <li><a href="#" class="chordItem">C</a></li>
                         <li><a href="#" class="chordItem">C#</a></li>
                         <li><a href="#" class="chordItem">D</a></li>
@@ -238,11 +259,18 @@
                    
                 </fieldset>
                 <fieldset>
-                    <label>Número de casas:</label> <br>
-                    <button id="goLeft"><b><</b></button> 
-                    <input type="number" id="showNumber" min="0" max="9" value="7"> 
-                    <button id="goRight"><b>></b></button> 
-                    <button class="btnPlay" onclick="playSequence()"> ▶</button>
+                    <label>quantidade de casas</label> <br>
+                    <div class="playArea">
+                        <div class="controllers">
+                            <button id="goLeft"><b>🠔</b></button> 
+                            <input type="number" id="showNumber" min="0" max="9" value="5"> 
+                            <button id="goRight"><b>🠖</b></button> 
+                        </div>
+                        <fieldset>
+                            <span>tocar arpejo</span>
+                            <button class="btnPlay"  onclick="playSequence()"> ▶</button>
+                        </fieldset>
+                    </div>
                 </fieldset>
                 <br>
 
