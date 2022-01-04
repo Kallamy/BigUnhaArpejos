@@ -188,11 +188,11 @@ function setNotes() {
     } 
 
     notes = getChordNotes(fund);
-
+    
     frets.forEach(fret => {
         let note = fret.getAttribute("data-note");
         let pos = fret.getAttribute("data-pos");
-       
+        
         if (notes.includes(note) && (pos >= limits[0] && pos < limits[1])) {
             console.log(limits)
             fret.classList.add("show");
@@ -205,12 +205,21 @@ function setNotes() {
         }
     });
     selectedNotes = document.querySelectorAll(".fret.red");
-
+    
     clearTab();
     drawTab(selectedNotes)
+    
 
+    console.log(notes)
+    document.querySelector(".notesArea").innerHTML = "";
+    notes.forEach((note) => {
+        console.log("oi")
+        document.querySelector(".notesArea").innerHTML += `<span class="noteSpan">${note}</span>`;
+    })
     
 }
+
+
 
 function clearNotes() {
     frets = document.querySelectorAll(".fret");
@@ -283,7 +292,7 @@ function setChord() {
     allChords = ["C", "D#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B","Cm", "D#m", "Dm", "D#m", "Em", "Fm", "F#m", "Gm", "G#m", "Am", "A#m", "Bm","C7", "D#7", "D7", "D#7", "E7", "F7", "F#7", "G7", "G#7", "A7", "A#7", "B7","Cm7", "D#m7", "Dm7", "D#m7", "Em7", "Fm7", "F#m7", "Gm7", "G#m7", "Am7", "A#m7", "Bm7"]
 
     for(var i = 0; i < chordItens.length; i++) {
-        
+        chordItens[i].classList.remove("selected")
         if(sevenCheck.checked == false) {
             if(chordType.value == "major") {
                 chordItens[i].innerText = allChords[i];
@@ -327,6 +336,9 @@ function setChord() {
             } else {
                 sevenCheck.checked = false;
         
+            }
+            if(chordItens[i].innerText == chord) {
+                chordItens[i].classList.add("selected");
             }
        }
     }

@@ -13,11 +13,18 @@
         margin: 0;
     }
     body {
-
+        background-color: lightslategray;
+    }
+    .footer {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 19;
+        color: white;
+        font-weight: bold;
     }
     .container {
         width: 100%;
-        height: 100vh;
+        height: 150%;
         background-color: lightslategray;
     }
     .area {
@@ -99,6 +106,8 @@
     }
     .chordsList {
         display: flex;
+        line-height: 33px;
+        height: 40px;
         list-style-type: none;
         margin-left: 70px;
     }
@@ -106,12 +115,13 @@
         display: block;
         width: 30px;
         color: black;
-        margin-left: 7px;
+        font-weight: bold;
+        margin-left: 9px;
         text-align: center;
         padding: 5px;
     }
     .chordItem.selected {
-        font-weight: 900;
+        font-weight: bolder;
         margin-top: 5px;
 
     }
@@ -126,13 +136,15 @@
         font-weight: bold;
         text-align: center;
         text-transform: uppercase;
+        font-size: 20px;
+
     }
     
     .playArea {
-        width: 350px;
+        width: 630px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-around;
     }
     .playArea label {
         display: block;
@@ -157,6 +169,17 @@
         width: 30px;
         height: 30px;
         margin-left: 10px;
+    }
+
+    .notesArea {
+        width: 200px;
+    }
+    .noteSpan {
+        color: black;
+        font-weight: bold;
+        font-size: 23px;
+        margin-left: 15px;
+        float: left;
     }
 
     .tabArea {
@@ -208,6 +231,7 @@
         animation: bright 1s;
     }
 
+
     @keyframes tune {
         0%  {box-shadow: 0 0 5px black}
         25% {box-shadow: 0 0 7px black;  transform: scale(1.1)}
@@ -216,11 +240,11 @@
         100%  {box-shadow: 0 0 5px black}
     }
     @keyframes bright {
-        0%  {text-shadow: 0 0 5px gold}
-        25% {text-shadow: 0 0 7px gold}
-        50%  {text-shadow: 0 0 10px gold; color: gray; }
-        75% {text-shadow: 0 0 7px gold}
-        100%  {text-shadow: 0 0 5px gold}
+        0%  {text-shadow: 0 0 5px red}
+        25% {text-shadow: 0 0 7px red}
+        50%  {text-shadow: 0 0 7px red; color: darkred; }
+        75% {text-shadow: 0 0 7px red}
+        100%  {text-shadow: 0 0 5px red}
     }
 </style>
 <body>
@@ -270,6 +294,7 @@
                             <span>tocar arpejo</span>
                             <button class="btnPlay"  onclick="playSequence()"> ▶</button>
                         </fieldset>
+                        <div class="notesArea">Notas: </div>
                     </div>
                 </fieldset>
                 <br>
@@ -406,6 +431,10 @@
                 <div class="line" data-id="1"></div>
                 <div class="tabSequence"></div>
             </div>
+        </div>
+
+        <div class="footer">
+            By Yuri Mallak
         </div>
     </div>
     
