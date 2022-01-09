@@ -98,7 +98,6 @@ var eh14 = new Audio("./audio/eh14.wav");
 hasLoad = false;
 chord = "G7";
 
-setChord();
 
 limitStart = 2;
 limitValue = 6;
@@ -130,12 +129,23 @@ setRange();
 
 chordItens = document.querySelectorAll(".chordItem");
 selectedNotes = document.querySelectorAll(".fret.red");
+chordIndex = 0;
+chordItensList = [];
+
+setChord();
 
 chordItens.forEach((chordItem) => {
-    chordItem.addEventListener("click", () => {
-        targetChord = chordItem.innerText
     
+    chordItem.addEventListener("click", () => {
+        targetChord = chordItem.innerText;
+        
         chord = targetChord;
+        
+        chordIndex = chordItensList.indexOf(targetChord)
+
+        
+
+    
 
         clearNotes();
         setNotes();
@@ -289,8 +299,9 @@ function setChord() {
     chordType = document.querySelector("#typeSelector");
     sevenCheck = document.querySelector("#sevenCheck");
 
-    allChords = ["C", "D#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B","Cm", "D#m", "Dm", "D#m", "Em", "Fm", "F#m", "Gm", "G#m", "Am", "A#m", "Bm","C7", "D#7", "D7", "D#7", "E7", "F7", "F#7", "G7", "G#7", "A7", "A#7", "B7","Cm7", "D#m7", "Dm7", "D#m7", "Em7", "Fm7", "F#m7", "Gm7", "G#m7", "Am7", "A#m7", "Bm7"]
+    allChords = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B","Cm", "C#m", "Dm", "D#m", "Em", "Fm", "F#m", "Gm", "G#m", "Am", "A#m", "Bm","C7", "C#7", "D7", "D#7", "E7", "F7", "F#7", "G7", "G#7", "A7", "A#7", "B7","Cm7", "C#m7", "Dm7", "D#m7", "Em7", "Fm7", "F#m7", "Gm7", "G#m7", "Am7", "A#m7", "Bm7"]
 
+    chordItensList = [];
     for(var i = 0; i < chordItens.length; i++) {
         chordItens[i].classList.remove("selected")
         if(sevenCheck.checked == false) {
@@ -298,7 +309,6 @@ function setChord() {
                 chordItens[i].innerText = allChords[i];
             } else if (chordType.value == "minor") {
                 chordItens[i].innerText = allChords[i+12];
-                console.log('bug.')
             }
             if(!hasLoad) {
                 if(!chord.includes('m')) {
@@ -341,8 +351,20 @@ function setChord() {
                 chordItens[i].classList.add("selected");
             }
        }
+       chordItensList.push(chordItens[i].innerText);
+       
     }
     hasLoad = true;
+    console.log(chordItensList[chordIndex]);
+    chord = chordItensList[chordIndex];
+    clearNotes();
+    setNotes();
+
+    chordItens.forEach((chordItem) => {
+        if(chordItem.innerText == chord) {
+            chordItem.classList.add('selected');
+        }
+    })
 }
 
 
