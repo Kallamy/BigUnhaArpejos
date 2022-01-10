@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <title>Tablatura</title>
 </head>
 <style>
@@ -11,9 +14,12 @@
         user-select: none;
         padding: 0;
         margin: 0;
+        font-family: Poppins;
+        font-size: 13px;
     }
     body {
         background-color: lightslategray;
+        overflow-x: hidden;
     }
     .footer {
         text-align: center;
@@ -30,56 +36,78 @@
     .area {
         background-color: #ddd;
         width: 100%;
-        height: 500px;
-        padding: 25px;
+        height: 600px;
+        padding: 0px;
     }
     .fretboard {
         margin: auto;
-        width: 700px;
+        width: 680px;
         height: 150px;
-        margin-top: 25px;
+        margin-top: 10px;
         
         padding: 10px;
         background-color:#eee;
     }
+    .arm {
+        background-color:burlywood;
+        background-image: url(textures/wood.jpg);
+        width: 663px;
+        border: 2px solid black;
+        padding: 5px;
+        padding-left: 0;
+    }
     .wires {
         position: absolute;
         z-index: 1;
+        margin-left: -20px;
     }
     .wire {
-        height: 130px;
+        height: 125px;
         width: 4px;
-        background-color: sienna;
+        background: linear-gradient(90deg, rgba(100,100,100,1) 15%, rgba(200,200,150,1) 100%);
+
         float: left;
         z-index: 1;
         margin: 20px;
-        margin-top: 10px;
+        margin-right: 20px;
+        margin-top: -7px;
+    }
+    .wire:last-child {
+        background: linear-gradient(90deg, rgba(251,249,225,1) 18%, rgba(255,255,111,1) 96%);
+        width: 6px;
     }
     .strings {
-        margin-top: 5px;
+        margin-top: -20px;
         z-index: 9;
     }
     .string {
-        width: 100%;
+        width: 102%;
         height: 2px;
-        background-color: black;
+        background-color: rgba(0, 0, 0, 0.5);
         display: flex;
         flex-direction: row-reverse;
         margin-top: 20px;
-        margin-left: -5px;
+        margin-left: -2px;
         position: relative;
         z-index: 99;
     }
+    .string.strong {
+        background-color: rgba(225, 225, 225, 0.7);
+    }
     .fret {
+        position: relative;
         width: 21px;
         height: 21px;
         border-radius: 50%;
         margin-top: -10px;
         margin-right: 23px;
         z-index: 2;
-        font-size: 13px;
+        line-height: 20px;
+        font-size: 9px;
         text-align: center;
-        color: whitesmoke
+        color: whitesmoke;
+        z-index: 2;
+
 
     }
     .fret.red {
@@ -93,14 +121,15 @@
     }
     .fret.playing {
         animation: tune 1s;
+        z-index:  99;
 
     }
 
     .menu {
         margin: auto;
         width: 700px;
-        height: 160px;
-        padding: 10px;
+        height: 200px;
+        padding: 5px;
         background-color: #aaa;
         
     }
@@ -116,8 +145,10 @@
         width: 30px;
         color: black;
         font-weight: bold;
+        font-size: 13px;
         margin-left: 9px;
         text-align: center;
+        text-decoration: none;
         padding: 5px;
     }
     .chordItem.selected {
@@ -135,11 +166,17 @@
     legend {
         font-weight: bold;
         text-align: center;
-        text-transform: uppercase;
+        /*text-transform: uppercase;*/
         font-size: 20px;
+        padding-bottom: 9px;
 
     }
-    
+     
+    input,
+    button {
+        border: 2px solid black;
+        border-radius: 5px;
+    }
     .playArea {
         width: 630px;
         display: flex;
@@ -151,9 +188,11 @@
     }
     #showNumber {
         height: 30px;
-        width: 30px;
-        text-align: center;
+        width: 40px;
+        text-align: right;
         font-weight: bold;
+        font-size: 17px;
+        padding: 3px;
     }
     #goLeft,
     #goRight {
@@ -163,12 +202,17 @@
         line-height: 15px;
         margin-top: 5px;
     }
+
     .btnPlay{
         padding: 5px;
         float: right;
         width: 30px;
         height: 30px;
         margin-left: 10px;
+    }
+    .btnPlay img {
+        margin-top: -7px;
+        margin-left: -5px;
     }
 
     .notesArea {
@@ -177,7 +221,7 @@
     .noteSpan {
         color: black;
         font-weight: bold;
-        font-size: 23px;
+        font-size: 18px;
         margin-left: 15px;
         float: left;
     }
@@ -191,7 +235,7 @@
         border-left: 2px solid black;
         border-right: 2px solid black;
         padding: 0;
-        margin-top: 25px;
+        margin-top: 10px;
     }
     .tabTitle {
         position: absolute;
@@ -224,7 +268,7 @@
     }
     .tabNum {
         font-weight: bold;
-        font-size: 20px;
+        font-size: 15px;
         margin-left: 21px;
     }
     .tabNum.playing {
@@ -283,16 +327,16 @@
                    
                 </fieldset>
                 <fieldset>
-                    <label>quantidade de casas</label> <br>
+                    <label>número de casas</label> <br>
                     <div class="playArea">
                         <div class="controllers">
-                            <button id="goLeft"><b>🠔</b></button> 
+                            <button id="goLeft"><b><img width="30" src="icons/left.png"></b></button> 
                             <input type="number" id="showNumber" min="0" max="9" value="5"> 
-                            <button id="goRight"><b>🠖</b></button> 
+                            <button id="goRight"><b><img width="30" src="icons/right.png"></b></button> 
                         </div>
                         <fieldset>
                             <span>tocar arpejo</span>
-                            <button class="btnPlay"  onclick="playSequence()"> ▶</button>
+                            <button class="btnPlay"  onclick="playSequence()"> <img width="30" src="icons/play.png"></button>
                         </fieldset>
                         <div class="notesArea">Notas: </div>
                     </div>
@@ -302,120 +346,122 @@
 
             </div>
             <div class="fretboard">
-                <div class="wires">
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                    <div class="wire"></div>
-                </div>
-                <div class="strings">
-                    <div class="string" data-id="6">
-                        <div class="fret" data-note="fá" data-pos="1"></div> 
-                        <div class="fret" data-note="fá#" data-pos="2"></div> 
-                        <div class="fret" data-note="sol" data-pos="3"></div> 
-                        <div class="fret" data-note="sol#" data-pos="4"></div> 
-                        <div class="fret" data-note="lá" data-pos="5"></div> 
-                        <div class="fret" data-note="lá#" data-pos="6"></div> 
-                        <div class="fret" data-note="si" data-pos="7"></div> 
-                        <div class="fret" data-note="dó" data-pos="8"></div> 
-                        <div class="fret" data-note="dó#" data-pos="9"></div> 
-                        <div class="fret" data-note="ré" data-pos="10"></div> 
-                        <div class="fret" data-note="ré#" data-pos="11"></div> 
-                        <div class="fret" data-note="mi" data-pos="12"></div> 
-                        <div class="fret" data-note="fá" data-pos="13"></div> 
-                        <div class="fret" data-note="fá#" data-pos="14"></div> 
+                <div class="arm">
+                    <div class="wires">
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
+                        <div class="wire"></div>
                     </div>
-                    <div class="string" data-id="5">
-                        <div class="fret" data-note="lá#" data-pos="1"></div> 
-                        <div class="fret" data-note="si" data-pos="2"></div> 
-                        <div class="fret" data-note="dó" data-pos="3"></div> 
-                        <div class="fret" data-note="dó#" data-pos="4"></div> 
-                        <div class="fret" data-note="ré" data-pos="5"></div> 
-                        <div class="fret" data-note="ré#" data-pos="6"></div> 
-                        <div class="fret" data-note="mi" data-pos="7"></div> 
-                        <div class="fret" data-note="fá" data-pos="8"></div> 
-                        <div class="fret" data-note="fá#" data-pos="9"></div> 
-                        <div class="fret" data-note="sol" data-pos="10"></div> 
-                        <div class="fret" data-note="sol#" data-pos="11"></div> 
-                        <div class="fret" data-note="lá" data-pos="12"></div> 
-                        <div class="fret" data-note="lá#" data-pos="13"></div> 
-                        <div class="fret" data-note="si" data-pos="14"></div> 
-                    </div>
-                    <div class="string" data-id="4">
-                        <div class="fret" data-note="ré#" data-pos="1"></div> 
-                        <div class="fret" data-note="mi" data-pos="2"></div> 
-                        <div class="fret" data-note="fá" data-pos="3"></div> 
-                        <div class="fret" data-note="fá#" data-pos="4"></div> 
-                        <div class="fret" data-note="sol" data-pos="5"></div> 
-                        <div class="fret" data-note="sol#" data-pos="6"></div> 
-                        <div class="fret" data-note="lá" data-pos="7"></div> 
-                        <div class="fret" data-note="lá#" data-pos="8"></div> 
-                        <div class="fret" data-note="si" data-pos="9"></div> 
-                        <div class="fret" data-note="dó" data-pos="10"></div> 
-                        <div class="fret" data-note="dó#" data-pos="11"></div> 
-                        <div class="fret" data-note="ré" data-pos="12"></div> 
-                        <div class="fret" data-note="ré#" data-pos="13"></div> 
-                        <div class="fret" data-note="mi" data-pos="14"></div> 
-                    </div>
-                    <div class="string" data-id="3">
-                        <div class="fret" data-note="sol#" data-pos="1"></div> 
-                        <div class="fret" data-note="lá" data-pos="2"></div> 
-                        <div class="fret" data-note="lá#" data-pos="3"></div> 
-                        <div class="fret" data-note="si" data-pos="4"></div> 
-                        <div class="fret" data-note="dó" data-pos="5"></div> 
-                        <div class="fret" data-note="dó#" data-pos="6"></div> 
-                        <div class="fret" data-note="ré" data-pos="7"></div> 
-                        <div class="fret" data-note="ré#" data-pos="8"></div> 
-                        <div class="fret" data-note="mi" data-pos="9"></div> 
-                        <div class="fret" data-note="fá" data-pos="10"></div> 
-                        <div class="fret" data-note="fá#" data-pos="11"></div> 
-                        <div class="fret" data-note="sol" data-pos="12"></div> 
-                        <div class="fret" data-note="sol#" data-pos="13"></div> 
-                        <div class="fret" data-note="lá" data-pos="14"></div> 
-                    </div>
-                    <div class="string" data-id="2">
-                        <div class="fret" data-note="dó" data-pos="1"></div> 
-                        <div class="fret" data-note="dó#" data-pos="2"></div> 
-                        <div class="fret" data-note="ré" data-pos="3"></div> 
-                        <div class="fret" data-note="ré#" data-pos="4"></div> 
-                        <div class="fret" data-note="mi" data-pos="5"></div> 
-                        <div class="fret" data-note="fá" data-pos="6"></div> 
-                        <div class="fret" data-note="fá#" data-pos="7"></div> 
-                        <div class="fret" data-note="sol" data-pos="8"></div> 
-                        <div class="fret" data-note="sol#" data-pos="9"></div> 
-                        <div class="fret" data-note="lá" data-pos="10"></div> 
-                        <div class="fret" data-note="lá#" data-pos="11"></div> 
-                        <div class="fret" data-note="si" data-pos="12"></div> 
-                        <div class="fret" data-note="dó" data-pos="13"></div> 
-                        <div class="fret" data-note="dó#" data-pos="14"></div> 
-                    </div>
-                    <div class="string" data-id="1">
-                        <div class="fret" data-note="fá" data-pos="1"></div> 
-                        <div class="fret" data-note="fá#" data-pos="2"></div> 
-                        <div class="fret" data-note="sol" data-pos="3"></div> 
-                        <div class="fret" data-note="sol#" data-pos="4"></div> 
-                        <div class="fret" data-note="lá" data-pos="5"></div> 
-                        <div class="fret" data-note="lá#" data-pos="6"></div> 
-                        <div class="fret" data-note="si" data-pos="7"></div> 
-                        <div class="fret" data-note="dó" data-pos="8"></div> 
-                        <div class="fret" data-note="dó#" data-pos="9"></div> 
-                        <div class="fret" data-note="ré" data-pos="10"></div> 
-                        <div class="fret" data-note="ré#" data-pos="11"></div> 
-                        <div class="fret" data-note="mi" data-pos="12"></div> 
-                        <div class="fret" data-note="fá" data-pos="13"></div> 
-                        <div class="fret" data-note="fá#" data-pos="14"></div> 
+                    <div class="strings">
+                        <div class="string strong" data-id="6">
+                            <div class="fret" data-note="fá" data-pos="1"></div> 
+                            <div class="fret" data-note="fá#" data-pos="2"></div> 
+                            <div class="fret" data-note="sol" data-pos="3"></div> 
+                            <div class="fret" data-note="sol#" data-pos="4"></div> 
+                            <div class="fret" data-note="lá" data-pos="5"></div> 
+                            <div class="fret" data-note="lá#" data-pos="6"></div> 
+                            <div class="fret" data-note="si" data-pos="7"></div> 
+                            <div class="fret" data-note="dó" data-pos="8"></div> 
+                            <div class="fret" data-note="dó#" data-pos="9"></div> 
+                            <div class="fret" data-note="ré" data-pos="10"></div> 
+                            <div class="fret" data-note="ré#" data-pos="11"></div> 
+                            <div class="fret" data-note="mi" data-pos="12"></div> 
+                            <div class="fret" data-note="fá" data-pos="13"></div> 
+                            <div class="fret" data-note="fá#" data-pos="14"></div> 
+                        </div>
+                        <div class="string strong" data-id="5">
+                            <div class="fret" data-note="lá#" data-pos="1"></div> 
+                            <div class="fret" data-note="si" data-pos="2"></div> 
+                            <div class="fret" data-note="dó" data-pos="3"></div> 
+                            <div class="fret" data-note="dó#" data-pos="4"></div> 
+                            <div class="fret" data-note="ré" data-pos="5"></div> 
+                            <div class="fret" data-note="ré#" data-pos="6"></div> 
+                            <div class="fret" data-note="mi" data-pos="7"></div> 
+                            <div class="fret" data-note="fá" data-pos="8"></div> 
+                            <div class="fret" data-note="fá#" data-pos="9"></div> 
+                            <div class="fret" data-note="sol" data-pos="10"></div> 
+                            <div class="fret" data-note="sol#" data-pos="11"></div> 
+                            <div class="fret" data-note="lá" data-pos="12"></div> 
+                            <div class="fret" data-note="lá#" data-pos="13"></div> 
+                            <div class="fret" data-note="si" data-pos="14"></div> 
+                        </div>
+                        <div class="string strong" data-id="4">
+                            <div class="fret" data-note="ré#" data-pos="1"></div> 
+                            <div class="fret" data-note="mi" data-pos="2"></div> 
+                            <div class="fret" data-note="fá" data-pos="3"></div> 
+                            <div class="fret" data-note="fá#" data-pos="4"></div> 
+                            <div class="fret" data-note="sol" data-pos="5"></div> 
+                            <div class="fret" data-note="sol#" data-pos="6"></div> 
+                            <div class="fret" data-note="lá" data-pos="7"></div> 
+                            <div class="fret" data-note="lá#" data-pos="8"></div> 
+                            <div class="fret" data-note="si" data-pos="9"></div> 
+                            <div class="fret" data-note="dó" data-pos="10"></div> 
+                            <div class="fret" data-note="dó#" data-pos="11"></div> 
+                            <div class="fret" data-note="ré" data-pos="12"></div> 
+                            <div class="fret" data-note="ré#" data-pos="13"></div> 
+                            <div class="fret" data-note="mi" data-pos="14"></div> 
+                        </div>
+                        <div class="string" data-id="3">
+                            <div class="fret" data-note="sol#" data-pos="1"></div> 
+                            <div class="fret" data-note="lá" data-pos="2"></div> 
+                            <div class="fret" data-note="lá#" data-pos="3"></div> 
+                            <div class="fret" data-note="si" data-pos="4"></div> 
+                            <div class="fret" data-note="dó" data-pos="5"></div> 
+                            <div class="fret" data-note="dó#" data-pos="6"></div> 
+                            <div class="fret" data-note="ré" data-pos="7"></div> 
+                            <div class="fret" data-note="ré#" data-pos="8"></div> 
+                            <div class="fret" data-note="mi" data-pos="9"></div> 
+                            <div class="fret" data-note="fá" data-pos="10"></div> 
+                            <div class="fret" data-note="fá#" data-pos="11"></div> 
+                            <div class="fret" data-note="sol" data-pos="12"></div> 
+                            <div class="fret" data-note="sol#" data-pos="13"></div> 
+                            <div class="fret" data-note="lá" data-pos="14"></div> 
+                        </div>
+                        <div class="string" data-id="2">
+                            <div class="fret" data-note="dó" data-pos="1"></div> 
+                            <div class="fret" data-note="dó#" data-pos="2"></div> 
+                            <div class="fret" data-note="ré" data-pos="3"></div> 
+                            <div class="fret" data-note="ré#" data-pos="4"></div> 
+                            <div class="fret" data-note="mi" data-pos="5"></div> 
+                            <div class="fret" data-note="fá" data-pos="6"></div> 
+                            <div class="fret" data-note="fá#" data-pos="7"></div> 
+                            <div class="fret" data-note="sol" data-pos="8"></div> 
+                            <div class="fret" data-note="sol#" data-pos="9"></div> 
+                            <div class="fret" data-note="lá" data-pos="10"></div> 
+                            <div class="fret" data-note="lá#" data-pos="11"></div> 
+                            <div class="fret" data-note="si" data-pos="12"></div> 
+                            <div class="fret" data-note="dó" data-pos="13"></div> 
+                            <div class="fret" data-note="dó#" data-pos="14"></div> 
+                        </div>
+                        <div class="string" data-id="1">
+                            <div class="fret" data-note="fá" data-pos="1"></div> 
+                            <div class="fret" data-note="fá#" data-pos="2"></div> 
+                            <div class="fret" data-note="sol" data-pos="3"></div> 
+                            <div class="fret" data-note="sol#" data-pos="4"></div> 
+                            <div class="fret" data-note="lá" data-pos="5"></div> 
+                            <div class="fret" data-note="lá#" data-pos="6"></div> 
+                            <div class="fret" data-note="si" data-pos="7"></div> 
+                            <div class="fret" data-note="dó" data-pos="8"></div> 
+                            <div class="fret" data-note="dó#" data-pos="9"></div> 
+                            <div class="fret" data-note="ré" data-pos="10"></div> 
+                            <div class="fret" data-note="ré#" data-pos="11"></div> 
+                            <div class="fret" data-note="mi" data-pos="12"></div> 
+                            <div class="fret" data-note="fá" data-pos="13"></div> 
+                            <div class="fret" data-note="fá#" data-pos="14"></div> 
+                        </div>
                     </div>
                 </div>
             </div>

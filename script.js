@@ -223,7 +223,6 @@ function setNotes() {
     console.log(notes)
     document.querySelector(".notesArea").innerHTML = "";
     notes.forEach((note) => {
-        console.log("oi")
         document.querySelector(".notesArea").innerHTML += `<span class="noteSpan">${note}</span>`;
     })
     
