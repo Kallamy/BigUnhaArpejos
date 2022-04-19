@@ -1,0 +1,623 @@
+:root {
+    --purple: #c444fd;
+    --purple2: #ab61f6;
+    --indigo: #8b85ff;
+    --indigo2: #6494fc;
+    --blue: #50b7f4;
+    --green: #b0e3aa;
+    --green2: #c0ee98;
+    --yellow: #e0d76e;
+    --yellow2: #e7d265;
+    --orange: #f6ac57;
+    --red: #fc5a58;
+    --red2: #c25584;
+
+    --finger1: navy;
+    --finger2: blue;
+    --finger3: dodgerblue;
+    --finger4: deepskyblue;
+
+}
+* {
+    user-select: none;
+    -webkit-user-drag: none;
+    padding: 0;
+    margin: 0;
+    font-family: Poppins;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+body {
+    background-color: lightgray;
+    overflow-x: hidden;
+}
+.footer {
+    text-align: center;
+    height: 100px;
+    font-size: 19;
+    color: white;
+    font-weight: bold;
+    padding-top: 15px;
+    background-color: lightslategray;
+}
+.container {
+    width: 100%;
+    height: 150%;
+}
+.area {
+    background-color: #ddd;
+    width: 100%;
+    height: 600px;
+    padding: 0px;
+}
+.fretboardArea {
+    width: 1000px;
+    margin: auto;
+    display: flex;
+    margin-top: 20px;
+}
+.triggerArea {
+    display: flex;
+    flex-direction: column-reverse;
+    background: #555;
+    margin-top: 0px;
+    width: 70px;
+    height: 170px;
+    margin-left: 80px;
+}
+.triggerButton {
+    width: 50px;
+    height: 17px;
+    background: gainsboro;
+    border: 2px solid black;
+    margin-top: 7px;
+    margin-left: 10px;
+    line-height: 15px;
+    text-align: center;
+}
+.triggerButton.playing {
+    animation: tune 1s;
+}
+
+.triggerButton:first-child {
+    margin-bottom: 20px;
+}
+.fretboard {
+    margin: auto;
+    width: 690px;
+    height: 150px;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 3px;
+    background-color: black;
+    overflow: hidden;
+}
+.arm {
+    position: relative;
+    background-color:burlywood;
+    background-image: url(textures/wood.jpg);
+    width: 730px;
+    border: 2px solid black;
+    padding: 3px;
+    margin-top: 3px;
+    margin-left: -10px;
+
+}
+.wires {
+    position: absolute;
+    z-index: 1;
+    margin-left: -23px;
+}
+.wire {
+    height: 134px;
+    width: 4px;
+    background: linear-gradient(90deg, rgba(100,100,100,1) 15%, rgba(200,200,150,1) 100%);
+
+    float: left;
+    z-index: 1;
+    margin: 25px;
+    margin-right: 20px;
+    margin-top: -5px;
+}
+.wire:last-child {
+    position: relative;
+    background: linear-gradient(90deg, rgba(251,249,225,1) 18%, rgba(255,255,111,1) 96%);
+    width: 6px;
+    height: 143px;
+    margin-top: -10px;
+}
+.dots {
+
+}
+.dot,
+.double-dot {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1px solid black;
+    background-color: cornsilk;
+    top: 63px;
+}
+.dot:nth-child(1){
+    right: 250px;
+}
+.dot:nth-child(2){
+    right: 348px;
+}
+.dot:nth-child(3){
+    right: 446px;
+}
+.dot:nth-child(4){
+    top: 15px;
+    right: 593px;
+}
+.dot:nth-child(5){
+    top: 112px;
+    right: 593px;
+}
+
+.strings {
+    margin-top: -20px;
+    z-index: 9;
+}
+.string {
+    width: 115%;
+    height: 2px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 22px;
+    margin-left: -124px;
+    position: relative;
+    z-index: 9;
+}
+.string.strong {
+    background-color: rgba(225, 225, 225, 0.7);
+}
+
+
+.nut {
+    position: absolute;
+    display: none;
+    left: 802px;
+    bottom: -10px;
+    z-index: 100;
+    width: 25px;
+    height: 140px;
+    background: var(--finger1)
+    ;z-index: 99;
+    border-radius: 20px;
+}
+.fret {
+    position: relative;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    margin-top: -10px;
+    margin-right: 26px;
+    z-index: 2;
+    line-height: 20px;
+    font-size: 10px;
+    text-align: center;
+    color: black;
+    z-index: 2;
+}
+
+.fret.pressed {
+    background: darkslategray;
+    border: 1px solid #eee;
+}
+.fret.firstFinger {
+    background: var(--finger1);
+}
+.fret.secondFinger {
+    background: var(--finger2);
+
+}
+.fret.thirdFinger {
+    background: var(--finger3);
+}
+.fret.fourthFinger {
+    background: var(--finger4);
+}
+.fret.show {
+    
+}
+.fret.purple,
+.triggerButton.purple {
+    background: var(--purple);
+    cursor: pointer;
+
+}
+.fret.purple2,
+.triggerButton.purple2 {
+    background: var(--purple2);
+    cursor: pointer;
+
+}
+.fret.indigo,
+.triggerButton.indigo {
+    background: var(--indigo);
+    cursor: pointer;
+
+}
+.fret.indigo2,
+.triggerButton.indigo2 {
+    background: var(--indigo2);
+    cursor: pointer;
+
+}
+.fret.blue,
+.triggerButton.blue {
+    background: var(--blue);
+    cursor: pointer;
+
+}
+.fret.green,
+.triggerButton.green {
+    background: var(--green);
+    cursor: pointer;
+
+}
+.fret.green2, 
+.triggerButton.green2 {
+    background: var(--green2);
+    cursor: pointer;
+
+}
+.fret.yellow, 
+.triggerButton.yellow {
+    background: var(--yellow);
+    cursor: pointer;
+
+}
+.fret.yellow2, 
+.triggerButton.yellow2 {
+    background: var(--yellow2);
+    cursor: pointer;
+
+}
+.fret.orange, 
+.triggerButton.orange {
+    background: var(--orange);
+    cursor: pointer;
+
+}
+.fret.red, 
+.triggerButton.red {
+    background: var(--red);
+    cursor: pointer;
+
+}
+.fret.red2, 
+.triggerButton.red2 {
+    background: var(--red2);
+    cursor: pointer;
+
+}
+
+.fret.playing {
+    animation: tune 1s;
+    z-index:  99;
+
+}
+
+.menu {
+    margin: auto;
+    margin-top: 20px;
+    width: 860px;
+    height: 230px;
+    padding: 5px;
+    background-color: #aaa;
+    
+}
+.modeMenu {
+    margin-left: 80px;
+}
+.modeSelector {
+    float: left;
+    width: 100px;
+    background-color: #ccc;
+    text-align: center;
+    opacity: 0.5;
+    cursor: pointer;
+    border-left: 1px solid #222;
+    border-right: 1px solid #222;
+}
+.modeSelector.selected {
+    opacity: 1;
+    border: 1px solid #555;
+}
+.selectors {
+
+    display: flex;
+    height: 40px;
+}
+#checkArea {
+    display: flex;
+    padding: 5px;
+}
+.sevenBlock, .nineBlock {
+    text-decoration: underline;
+}
+#sevenCheck, #nineCheck {
+    float: right;
+    width: 15px;
+    height: 15px;
+    margin-top: 3px;
+    margin-left: 5px;
+}
+#typeSelctor {
+    float: left;
+}
+.showInfo {
+    margin-left: 300px;
+    background-color: transparent;
+    color: black;
+    padding: 3px;
+    float: right;
+}
+.chordsList {
+    display: flex;
+    line-height: 33px;
+    height: 40px;
+    list-style-type: none;
+    margin-left: 70px;
+}
+.chordItem {
+    display: block;
+    width: 64px;
+    color: black;
+    font-weight: bold;
+    font-size: 13px;
+    margin-left: 0px;
+    text-align: center;
+    text-decoration: none;
+    padding: 3px;
+    opacity: 0.7;
+    border-right: .5px solid #777;
+    border-top: .5px solid #777;
+}
+.chordItem:first-child {
+    border-left: 1px solid #777;
+}
+.chordItem:hover {
+    background-color: silver;
+   /* box-shadow: 0px 0px 4px black; */
+   border: 2px solid darkgrey;
+    font-weight: bolder;
+}
+.chordItem.selected {
+    background-color: aliceblue;
+   /* box-shadow: 0px 0px 4px black; */
+   border: 2px solid darkgrey;
+    font-weight: bolder;
+    opacity: 1;
+}
+fieldset  {
+    background-color: #ccc;
+    padding: 5px 5px;
+    padding-bottom: 5px;
+    padding-top: 0px;
+}
+fieldset span {
+    line-height: 30px;
+}
+legend {
+    font-weight: bold;
+    text-align: center;
+    /*text-transform: uppercase;*/
+    font-size: 15px;
+    padding-bottom: 0px;
+
+}
+label {
+    margin-left: 25px;
+}
+ 
+input,
+button {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.controllersArea {
+    width: 630px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 0;
+    margin-left: 90px;
+}
+
+.options {
+    height: 60px;
+}
+.playArea label {
+    display: block;
+    margin-top: 5px;
+}
+.playChord {
+    width: 150px;
+    padding-left: 50px;
+}
+
+.numberSpan {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 91px;
+}
+
+.controllers {
+    margin-right: 25px;
+}
+.chordControllers {
+    margin-left: -20px;
+    margin-right: 25px;
+}
+#chordNumber {
+    font-size: 30px;
+    padding: 10px;
+}
+#showNumber {
+    height: 25px;
+    width: 35px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0px;
+}
+#goLeft,
+#goRight {
+    height: 20px;
+    width: 30px;
+    font-size: 30px;
+    line-height: 1px;
+    margin-top: 5px;
+}
+
+.btnPlay{
+    padding: 5px;
+    float: right;
+    width: 21px;
+    height: 21px;
+    margin-top: 5px;
+    margin-left: 10px;
+    line-height: 1px;
+}
+.btnPlay img {
+    margin-top: -7px;
+    margin-left: -6px;
+}
+
+.playDown, 
+.playUp {
+    height: 30px;
+}
+.playDown img, 
+.playUp img {
+    margin-top: 5px;
+}
+
+.notesArea {
+    width: 300px;
+    margin-left: 0px;
+}
+
+.noteSpan {
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 15px;
+    float: left;
+}
+.noteSpan.scale {
+    font-size: 15px;
+}
+
+.tabArea {
+    
+    margin: auto;
+
+    width: 700px;
+    height: 87px;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    padding: 0;
+    margin-top: 10px;
+}
+.tabTitle {
+    position: absolute;
+    line-height: 36px;
+    margin-top: -5px;
+    margin-left: 13px;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+.line {
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    position: relative;
+    z-index: 99;
+   
+}
+.tabSequence {
+    position: relative;
+    display: flex;
+    bottom: 124px;
+    left: 40px;
+}
+.tabNum {
+    font-weight: bold;
+    font-size: 15px;
+    margin-left: 21px;
+}
+.tabNum.playing {
+    animation: bright 1s;
+}
+
+.infoArea {
+    position: absolute;
+    display: none;
+    background-color: #b5e48c;
+
+    border: 7px double black;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    z-index: 999;
+    padding-left: 60px;
+    padding-right: 60px;
+    width: 900px;
+    height: 560px;
+
+}
+.infoArea h1 {
+    margin-top: 20px;
+    font-family: Poppins;
+    font-size: 18px;
+    color: #1e6091;
+    text-align: center;
+}
+.infoArea p {
+    margin-top: 5px;
+    font-family: Poppins; 
+    font-size: 15px;
+    text-align: justify;
+    text-indent: 20px;
+    color:  #168aad ;
+
+}
+.closeButton {
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    font-size: 0.93rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color:  black;
+}
+
+@keyframes tune {
+    0%  {box-shadow: 0 0 5px black}
+    25% {box-shadow: 0 0 7px black;  transform: scale(1.1)}
+    50%  {box-shadow: 0 0 10px black; transform: scale(1.2)}
+    75% {box-shadow: 0 0 7px black; transform: scale(1.1)}
+    100%  {box-shadow: 0 0 5px black}
+}
+@keyframes bright {
+    0%  {text-shadow: 0 0 5px red}
+    25% {text-shadow: 0 0 7px red}
+    50%  {text-shadow: 0 0 7px red; color: darkred; }
+    75% {text-shadow: 0 0 7px red}
+    100%  {text-shadow: 0 0 5px red}
+}

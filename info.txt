@@ -1,0 +1,11 @@
+botão Explicações teóricas;
+
+
+Um acorde é uma mistura de três ou mais notas tocadas ao mesmo tempo.
+
+Um acorde de 4 notas ou acorde de sétima é conhecido como tétrade.
+
+Um arpejo são as notas do acorde tocadas separadamnete.
+
+Medidas de um acorde maior:
+Fundamental + 2tons + 1tom e meio
