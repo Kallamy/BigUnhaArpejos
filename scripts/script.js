@@ -124,7 +124,7 @@ modeSelectors.forEach((selector) => {
 
 setMode();
 function setMode() {
-    
+    document.querySelector(".tabArea").style.display = "none";
     if(mode == "arpeggio"){
         modeSelectors[1].classList.add("selected");
         document.querySelector(".controllers").style.display = "block";
@@ -320,9 +320,15 @@ chordItens.forEach((chordItem) => {
 tabSequence = document.querySelector(".tabSequence");
 
 // Notes setting function
+
 function setNotes() {
     pressNote();
     if(chord != "") {
+        console.log(isPlaying)
+        if(isPlaying) {
+            //clearTimeout(playTimeout);
+            console.log("Stop timeout")
+        }
         // define the fundamental note according to the abbreviation of the chord
         if(chord.includes("C")) {
             fund = "dó";
@@ -353,7 +359,9 @@ function setNotes() {
             }
         } else if (chord.includes("B")) {
             fund = "si";
-        } 
+        } else {
+            fund = "dó"
+        }
         // get the notes of the chord or scale
         if(mode == "arpeggio") {
             notes = getChordNotes(fund);
@@ -425,9 +433,10 @@ function setNotes() {
                     }
                     fret.style.fontWeight = "500";
                     fret.innerText = note;
-                    
+            
+                
                     fret.addEventListener("click", playNoteClick); 
-                    
+
                     if(note.includes("♭")) {
                         notesList = document.querySelectorAll(".noteSpan");
                         fund = notesList[0].innerText;
@@ -435,6 +444,12 @@ function setNotes() {
                     if(note == fund) {
                         fret.style.fontWeight = "1000";
                     }
+
+                   
+                
+                        
+                        
+                
                 } 
                      
             }
@@ -746,8 +761,9 @@ function drawChord() {
 
     frets = document.querySelectorAll(".fret");
     triggerBtns = document.querySelectorAll(".triggerButton");
-    chrd = "";
+    chrd = [];
     for(var i = 0; i < chordObj.length; i++) {
+
         if(chordObj[i].acronym == chord) {
             chrd = chordObj[i];
         }
@@ -912,15 +928,17 @@ function playNote(string, pos) {
 // Play the clicked note function
 function playNoteClick(e) {
     if(mode != "chords") {
+        
         string = e.currentTarget.parentElement.getAttribute("data-id");
         pos = e.currentTarget.getAttribute('data-pos');
         note = e.currentTarget.getAttribute('data-note');
-    
-        e.currentTarget.classList.remove('playing');
-        void e.currentTarget.offsetWidth;
-        e.currentTarget.classList.add('playing');
         
-        setSound(string, pos);
+        if(notes.includes(note)) {
+            e.currentTarget.classList.remove('playing');
+            void e.currentTarget.offsetWidth;
+            e.currentTarget.classList.add('playing');
+            setSound(string, pos);
+        }
     }
    
 }
@@ -936,6 +954,7 @@ sevenCheck.addEventListener("change", setChord);
 
 
 function setChord() {
+    isPlaying = false;
     clearNotes();
     if(mode == "scale") {
         document.querySelectorAll(".noteSpan").forEach((note) => {
@@ -1026,9 +1045,7 @@ function setChord() {
        
     }
     hasLoad = true;
-
     setNotes();
-
     chordItens.forEach((chordItem) => {
         if(chordItem.innerText == chord) {
             
@@ -1130,31 +1147,57 @@ function setRange() {
     }
 }
 
+document.querySelector(".btnPlay").addEventListener("click", playSequence)
+
 playSequence()
 // Sequence Play function
 function playSequence() {
-    selectedNotes = document.querySelectorAll("fret.show");
+    document.querySelector(".tabArea").style.display = "block";
+    selectedNotes = document.querySelectorAll(".fret.show");
     playTime = (document.querySelector("#playTime").value * 16.666);
-
     count = 0;
+    isPlaying = true;
+    firstTime = true;
     for(let i=0; i<selectedNotes.length; i++){ 
-        let string = selectedNotes[i].parentElement.getAttribute("data-id")
-        let pos = selectedNotes[i].getAttribute("data-pos")
+        let string = selectedNotes[i].parentElement.getAttribute("data-id");
+        let pos = selectedNotes[i].getAttribute("data-pos");
+        let timeValue = document.querySelector("#playTime");
+        let time = 1000 / (parseInt(timeValue.value) / 60)
         tabNums = document.querySelectorAll(".tabNum");
-        setTimeout(() => {
+        
+        pageNum = 0;
+        playTimeout = setTimeout(() => {
             playNote(string, pos)
             selectedNotes[i].classList.remove('playing');
             selectedNotes[i].offsetWidth;
             selectedNotes[i].classList.add('playing');
-    
+            
             tabNums[i].classList.remove('playing');
             tabNums[i].offsetWidth;
             tabNums[i].classList.add('playing');
-        }, 1000 * count)
+            
+            
+                
+                if(i >= (18 * pageNum)) {
+                    document.querySelector(".tabSequence").style.left = `${-550*pageNum}px`;
+                    if(i < 21) {
+                        pageNum++;
+                    }
+                }
+                console.log(pageNum)
+                if(i == selectedNotes.length -1) {
+                    setTimeout(() => {
+                        document.querySelector(".tabArea").style.display = "none";
+                        document.querySelector(".tabSequence").style.left = "3px";
+                    }, 2000)
+                }
+        }, time * count)
         count++;
+        firstTime = false;
     }
-    
+   // console.log(playTimeout)
 }
+
 canPlay = false;
 triggers = document.querySelectorAll(".triggerButton");
 triggers.forEach(tggr => {

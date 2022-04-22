@@ -74,9 +74,9 @@
                     <label class="numberSpan">número de casas</label> <br>
                     <div class="controllersArea">
                         <div class="controllers">
-                            <button id="goLeft"><b><img width="20" src="icons/left.png"></b></button> 
-                            <input type="number" id="showNumber" min="0" max="9" value="5"> 
-                            <button id="goRight"><b><img width="20" src="icons/right.png"></b></button> 
+                                <button id="goLeft"><b><img width="20" src="icons/left.png"></b></button> 
+                                <input type="number" id="showNumber" min="0" max="14" value="5"> 
+                                <button id="goRight"><b><img width="20" src="icons/right.png"></b></button> 
                         </div>
                         <div class="chordControllers">
                             <button id="goLeft"><b><img width="15" src="icons/leftArrow.png"></b></button> 
@@ -87,10 +87,10 @@
                             <legend id="playLegend">Tocar arpejo</legend>
                             <div class="playArea">
                                 <span>tempo</span>
-                                <input type="number" id="playTime" min="30" max="240" value="240"> 
-                                <button class="btnPlay"  onclick=""> <img width="20" src="icons/play.png"></button>
+                                <input type="number" id="playTime" min="30" max="240" value="60"> 
+                                <button class="btnPlay"> <img width="20" src="icons/play.png"></button>
                             </div>
-                            <div class="playChord">
+                            <div class="playChord" style="display:none">
                                 <button class="playDown"><img width="20" src="icons/down.png"></button>
                                 <button class="playUp"><img width="20" src="icons/up.png"></button>
                             </div>
@@ -247,13 +247,16 @@
                 <div class="tabTitle">
                     T <br> A <br> B
                 </div>
-                <div class="line" data-id="6"></div>
-                <div class="line" data-id="5"></div>
-                <div class="line" data-id="4"></div>
-                <div class="line" data-id="3"></div>
-                <div class="line" data-id="2"></div>
-                <div class="line" data-id="1"></div>
-                <div class="tabSequence"></div>
+                
+                    <div class="line" data-id="6"></div>
+                    <div class="line" data-id="5"></div>
+                    <div class="line" data-id="4"></div>
+                    <div class="line" data-id="3"></div>
+                    <div class="line" data-id="2"></div>
+                    <div class="line" data-id="1"></div>
+                <div class="tabOutline">
+                    <div class="tabSequence"></div>
+                </div>
             </div>
         </div>
     <div class="footer">

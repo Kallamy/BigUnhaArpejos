@@ -351,6 +351,10 @@ body {
 #typeSelctor {
     float: left;
 }
+
+#playTime {
+    text-align: center;
+}
 .showInfo {
     margin-left: 300px;
     background-color: transparent;
@@ -445,8 +449,9 @@ button {
 
 .numberSpan {
     display: inline-block;
-    margin-top: 10px;
-    margin-left: 91px;
+    margin-top: 5px;
+    margin-left: 100px;
+    font-size: 12px;
 }
 
 .controllers {
@@ -486,6 +491,9 @@ button {
     margin-left: 10px;
     line-height: 1px;
 }
+.btnPlay:hover {
+    background: silver;
+}
 .btnPlay img {
     margin-top: -7px;
     margin-left: -6px;
@@ -519,18 +527,20 @@ button {
 .tabArea {
     
     margin: auto;
-
-    width: 700px;
-    height: 87px;
+    position: relative;
+    overflow: hidden;
+    width: 650px;
+    height: 110px;
     border-left: 2px solid black;
     border-right: 2px solid black;
     padding: 0;
     margin-top: 10px;
 }
+
 .tabTitle {
     position: absolute;
     line-height: 36px;
-    margin-top: -5px;
+    margin-top: 5px;
     margin-left: 13px;
     font-size: 30px;
     font-family: Arial, Helvetica, sans-serif;
@@ -546,19 +556,31 @@ button {
     margin-bottom: 10px;
     margin-left: 0px;
     position: relative;
-    z-index: 99;
+    z-index: 9;
    
 }
-.tabSequence {
-    position: relative;
-    display: flex;
-    bottom: 124px;
+.tabOutline {
+    position: absolute;
+    top: 0;
     left: 40px;
+    width: 590px;
+    height: 200px;
+    background-color: transparent;
+    overflow: hidden;
+    
+
+}
+.tabSequence {
+    position: absolute;
+    display: flex;
+    bottom:87px;
+    right:  3px;
 }
 .tabNum {
     font-weight: bold;
     font-size: 15px;
     margin-left: 21px;
+    z-index: 90;
 }
 .tabNum.playing {
     animation: bright 1s;
@@ -586,7 +608,7 @@ button {
     margin-top: 20px;
     font-family: Poppins;
     font-size: 18px;
-    color: #1e6091;
+    color: #168aad;
     text-align: center;
 }
 .infoArea p {
@@ -595,7 +617,7 @@ button {
     font-size: 15px;
     text-align: justify;
     text-indent: 20px;
-    color:  #168aad ;
+    color: #1e6091;
 
 }
 .closeButton {
@@ -608,16 +630,16 @@ button {
 }
 
 @keyframes tune {
-    0%  {box-shadow: 0 0 5px black}
+    0%  {box-shadow: 0 0 5px black;}
     25% {box-shadow: 0 0 7px black;  transform: scale(1.1)}
     50%  {box-shadow: 0 0 10px black; transform: scale(1.2)}
     75% {box-shadow: 0 0 7px black; transform: scale(1.1)}
-    100%  {box-shadow: 0 0 5px black}
+    100%  {box-shadow: 0 0 5px black;}
 }
 @keyframes bright {
     0%  {text-shadow: 0 0 5px red}
-    25% {text-shadow: 0 0 7px red}
-    50%  {text-shadow: 0 0 7px red; color: darkred; }
-    75% {text-shadow: 0 0 7px red}
+    25% {text-shadow: 0 0 6px red; color: darkred;}
+    50%  {text-shadow: 0 0 7px red; color: darkred} 
+    75% {text-shadow: 0 0 6px red; color: darkred; }
     100%  {text-shadow: 0 0 5px red}
 }
