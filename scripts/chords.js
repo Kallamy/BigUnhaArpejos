@@ -196,8 +196,8 @@ if(c != ""){
                 },
                 {
                     acronym: "B7",
-                    positions: [0,0,2,1,2,0],
-                    fingers: [0,0,3,1,2,0],
+                    positions: [2,0,2,1,2,0],
+                    fingers: [4,0,3,1,2,0],
                     nut: null,
                     disabled: [6,1],
                     variants: []
@@ -209,99 +209,99 @@ if(c != ""){
             chordObj = [
                 {
                     acronym: "C9",
-                    positions: [0,3,3,2,3,0],
-                    fingers: [0,4,3,1,2,0],
+                    positions: [0,3,0,2,3,0],
+                    fingers: [0,3,0,1,2,0],
                     nut: null,
-                    disabled: [6,1],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "C#9",
-                    positions: [0,4,4,3,4,0],
-                    fingers: [0,4,3,1,2,0],
-                    nut: null,
-                    disabled: [6,1],
+                    positions: [0,6,8,6,0,0],
+                    fingers: [0,3,4,2,0,0],
+                    nut: [4,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "D9",
-                    positions: [0,5,5,4,5,0],
-                    fingers: [0,4,3,1,2,0],
+                    positions: [0,3,2,0,0,0],
+                    fingers: [0,2,1,0,0,0],
                     nut: null,
-                    disabled: [6,1],
+                    disabled: [6,5],
                     variants: []
                 },
                 {
                     acronym: "D#9",
-                    positions: [1,2,0,1,0,0],
-                    fingers: [3,4,0,1,0,0],
-                    nut: null,
+                    positions: [0,0,8,8,0,0],
+                    fingers: [0,0,3,2,0,0],
+                    nut: [6,5],
                     disabled: [6,5],
                     variants: []
     
                 },
                 {
                     acronym: "E9",
-                    positions: [2,3,1,2,0,0],
-                    fingers: [3,4,1,2,0,0],
+                    positions: [0,0,1,4,2,0],
+                    fingers: [0,0,1,3,2,0],
                     nut: null,
-                    disabled: [6,5],
+                    disabled: [],
                     variants: []
                 },
                 {
                     acronym: "F9",
-                    positions: [3,4,2,3,0,0],
-                    fingers: [3,4,1,2,0,0],
+                    positions: [3,1,2,3,0,0],
+                    fingers: [4,1,2,3,0,0],
                     nut: null,
                     disabled: [6,5],
                     variants: []
                 },
                 {
                     acronym: "F#9",
-                    positions: [4,5,3,4,0,0],
-                    fingers: [3,4,1,2,0,0,],
-                    nut: null,
-                    disabled: [6,5],
+                    positions: [0,3,6,4,0,0],
+                    fingers: [0,2,4,3,0,0,],
+                    nut: [2,6],
+                    disabled: [],
                     variants: []
                 },
                 {
                     acronym: "G9",
-                    positions: [5,6,4,5,0,0],
-                    fingers: [3,4,1,2,0,0],
+                    positions: [0,0,2,0,0,3],
+                    fingers: [0,0,1,0,0,2],
                     nut: null,
-                    disabled: [6,5],
+                    disabled: [5,1],
                     variants: []
                 },
                 {
                     acronym: "G#9",
-                    positions: [6,7,5,6,0,0],
-                    fingers: [3,4,1,2,0,0],
-                    nut: null,
+                    positions: [0,0,5,8,6,0],
+                    fingers: [0,0,2,4,3,0],
+                    nut: [4,6],
                     disabled: [6,5],
                     variants: []
                 },
                 {
                     acronym: "A9",
-                    positions: [7,8,6,7,0,0],
-                    fingers: [3,4,1,2,0,0],
+                    positions: [0,2,4,2,0,0],
+                    fingers: [0,2,3,1,0,0],
                     nut: null,
-                    disabled: [6,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "A#9",
-                    positions: [0,1,1,0,1,0],
-                    fingers: [0,3,2,0,1,0],
-                    nut: null,
-                    disabled: [6,1],
+                    positions: [0,0,3,3,0,0],
+                    fingers: [0,0,3,2,0,0],
+                    nut: [1,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "B9",
-                    positions: [0,2,2,1,2,0],
-                    fingers: [0,4,3,1,2,0],
-                    nut: null,
-                    disabled: [6,1],
+                    positions: [0,0,4,4,0,0],
+                    fingers: [0,0,3,2,0,0],
+                    nut: [2,5],
+                    disabled: [6],
                     variants: []
                 },
     
@@ -314,7 +314,7 @@ if(c != ""){
                     positions: [0,3,3,2,3,0],
                     fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
@@ -322,7 +322,7 @@ if(c != ""){
                     positions: [0,4,4,3,4,0],
                     fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
@@ -330,23 +330,23 @@ if(c != ""){
                     positions: [0,5,5,4,5,0],
                     fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
                     acronym: "D#7(9)",
-                    positions: [3,4,3,1,0,0],
-                    fingers: [2,4,2,1,0,0],
+                    positions: [1,2,0,1,0,0],
+                    fingers: [2,3,0,1,0,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,5],
                     variants: []
                 },
                 {
                     acronym: "E7(9)",
-                    positions: [2,3,1,0,0,0],
-                    fingers: [2,3,1,0,0,0],
+                    positions: [2,3,1,2,0,0],
+                    fingers: [3,4,1,2,0,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,5],
                     variants: []
                 },
                 {
@@ -354,15 +354,15 @@ if(c != ""){
                     positions: [3,4,2,3,0,0],
                     fingers: [3,4,1,2,0,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,5],
                     variants: []
                 },
                 {
                     acronym: "F#7(9)",
-                    positions: [0,0,4,5,5,0],
-                    fingers: [0,0,2,4,3,0,],
+                    positions: [4,5,3,4,0,0],
+                    fingers: [3,4,1,2,0,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,5],
                     variants: []
                 },
                 {
@@ -370,31 +370,31 @@ if(c != ""){
                     positions: [0,0,2,3,0,3],
                     fingers: [0,0,1,3,0,2],
                     nut: null,
-                    disabled: [],
+                    disabled: [5,1],
                     variants: []
                 },
                 {
                     acronym: "G#7(9)",
-                    positions: [0,1,0,2,3,0],
-                    fingers: [0,1,0,2,3,0],
+                    positions: [0,1,3,4,0,4],
+                    fingers: [0,1,2,4,3,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [5,1],
                     variants: []
                 },
                 {
                     acronym: "A7(9)",
                     positions: [0,2,4,5,0,0],
-                    fingers: [0,1,3,4,0,0],
+                    fingers: [0,1,2,3,0,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "A#7(9)",
-                    positions: [0,3,3,3,0],
-                    fingers: [0,4,3,2,0,0],
+                    positions: [0,1,1,0,1,0],
+                    fingers: [0,3,2,0,1,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
@@ -402,7 +402,7 @@ if(c != ""){
                     positions: [0,2,2,1,2,0],
                     fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
     
@@ -618,32 +618,32 @@ if(c != ""){
                     acronym: "Cm9",
                     positions: [0,4,7,5,0,0],
                     fingers: [0,2,4,3,0,0],
-                    nut: [3,6],
-                    disabled: [],
+                    nut: [3,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "C#m9",
                     positions: [0,5,8,6,0,0],
                     fingers: [0,2,4,3,0,0],
-                    nut: [4,6],
-                    disabled: [],
+                    nut: [4,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "Dm9",
                     positions: [0,6,9,7,0,0],
                     fingers: [0,2,4,3,0,0],
-                    nut: [5,6],
-                    disabled: [],
+                    nut: [5,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "D#m9",
                     positions: [0,7,10,8,0,0],
                     fingers: [0,2,4,3,0,0],
-                    nut: [6,6],
-                    disabled: [],
+                    nut: [6,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
@@ -691,23 +691,23 @@ if(c != ""){
                     positions: [0,1,4,2,0,0],
                     fingers: [0,1,3,2,0,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "A#m9",
                     positions: [0,2,5,3,0],
                     fingers: [0,4,3,2,0,0],
-                    nut: [1,6],
-                    disabled: [],
+                    nut: [1,5],
+                    disabled: [6],
                     variants: []
                 },
                 {
                     acronym: "Bm9",
                     positions: [0,3,6,4,0],
                     fingers: [0,2,4,3,0,0],
-                    nut: [2,6],
-                    disabled: [],
+                    nut: [2,5],
+                    disabled: [6],
                     variants: []
                 },
     
@@ -717,98 +717,98 @@ if(c != ""){
             chordObj = [
                 {
                     acronym: "Cm7(9)",
-                    positions: [0,1,0,2,3,0],
-                    fingers: [0,1,0,2,3,0],
+                    positions: [0,3,3,1,3,0],
+                    fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
                     acronym: "C#m7(9)",
-                    positions: [0,2,0,3,4,0],
-                    fingers: [0,1,0,2,3,0],
+                    positions: [0,4,4,2,4,0],
+                    fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
                     acronym: "Dm7(9)",
-                    positions: [2,3,2,0,0,0],
-                    fingers: [2,3,1,0,0,0],
+                    positions: [0,5,5,3,5,0],
+                    fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
                     acronym: "D#m7(9)",
-                    positions: [3,4,3,1,0,0],
-                    fingers: [2,4,2,1,0,0],
+                    positions: [0,6,6,4,6,0],
+                    fingers: [0,4,3,1,2,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
                 {
                     acronym: "Em7(9)",
-                    positions: [0,0,1,2,2,0],
-                    fingers: [0,0,1,3,2,0],
+                    positions: [2,3,0,0,2,0],
+                    fingers: [2,3,0,0,1,0],
                     nut: null,
                     disabled: [],
                     variants: []
                 },
                 {
                     acronym: "Fm7(9)",
-                    positions: [0,0,2,3,3,0],
-                    fingers: [0,1,0,2,3,0],
-                    nut: null,
+                    positions: [3,4,0,0,3,0],
+                    fingers: [3,4,0,0,2,0],
+                    nut: [1,6],
                     disabled: [],
                     variants: []
                 },
                 {
                     acronym: "F#m7(9)",
-                    positions: [0,0,4,5,5,0],
-                    fingers: [0,0,2,4,3,0,],
-                    nut: null,
+                    positions: [4,5,0,0,4,0],
+                    fingers: [3,4,0,0,2,0],
+                    nut: [2,6],
                     disabled: [],
                     variants: []
                 },
                 {
                     acronym: "Gm7(9)",
-                    positions: [3,0,0,0,2,3],
-                    fingers: [0,3,0,0,1,0],
+                    positions: [0,0,2,3,1,3],
+                    fingers: [0,0,2,4,1,3],
                     nut: null,
-                    disabled: [],
+                    disabled: [2,1],
                     variants: []
                 },
                 {
                     acronym: "G#m7(9)",
-                    positions: [0,1,0,2,3,0],
-                    fingers: [0,1,0,2,3,0],
+                    positions: [0,0,3,4,2,4],
+                    fingers: [0,0,2,4,1,3],
                     nut: null,
-                    disabled: [],
+                    disabled: [2,1],
                     variants: []
                 },
                 {
                     acronym: "Am7(9)",
-                    positions: [0,2,2,2,0,0],
-                    fingers: [0,3,2,1,0,0],
+                    positions: [0,0,4,5,3,5],
+                    fingers: [0,0,2,4,1,3],
                     nut: null,
-                    disabled: [],
+                    disabled: [2,1],
                     variants: []
                 },
                 {
                     acronym: "A#m7(9)",
-                    positions: [0,3,3,3,0],
-                    fingers: [0,4,3,2,0,0],
+                    positions: [0,0,5,6,4,6],
+                    fingers: [0,0,2,4,1,3],
                     nut: null,
-                    disabled: [],
+                    disabled: [2,1],
                     variants: []
                 },
                 {
                     acronym: "Bm7(9)",
-                    positions: [0,3,3,3,0],
-                    fingers: [0,4,3,2,0,0],
+                    positions: [0,2,2,0,2,0],
+                    fingers: [0,3,2,0,1,0],
                     nut: null,
-                    disabled: [],
+                    disabled: [6,1],
                     variants: []
                 },
     

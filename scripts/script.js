@@ -525,9 +525,10 @@ function getScaleNotes(fund) {
     if(!chord.includes('m')) {
         isBemol = true;
         updateAllNotes();
-        if(chord == "D" || chord == "E" || 
-        chord == "F#" ||  chord == "G" || 
-        chord == "A" || chord == "B") {
+        if( chord == "D" ||
+         chord == "E" || chord == "F#" ||  
+         chord == "G" || chord == "A" || 
+         chord == "B" ) {
             isBemol = false;
             updateAllNotes();
         }
@@ -595,7 +596,7 @@ function getChordNotes(fund) {
         selection.push(allNotes[fundIndex + 10]);
     }
     if(chord.includes("9")) {
-        selection.push(allNotes[fundIndex + 1]);
+        selection.push(allNotes[fundIndex + 2]);
     }
     
     return selection;
@@ -1152,21 +1153,24 @@ document.querySelector(".btnPlay").addEventListener("click", playSequence)
 playSequence()
 // Sequence Play function
 function playSequence() {
-    document.querySelector(".tabArea").style.display = "block";
+  
+    count = 0; 
+    if(count == 0) {
+        document.querySelector(".tabArea").style.display = "block"; 
+    }
     selectedNotes = document.querySelectorAll(".fret.show");
-    playTime = (document.querySelector("#playTime").value * 16.666);
-    count = 0;
     isPlaying = true;
-    firstTime = true;
     for(let i=0; i<selectedNotes.length; i++){ 
         let string = selectedNotes[i].parentElement.getAttribute("data-id");
         let pos = selectedNotes[i].getAttribute("data-pos");
         let timeValue = document.querySelector("#playTime");
         let time = 1000 / (parseInt(timeValue.value) / 60)
         tabNums = document.querySelectorAll(".tabNum");
-        
         pageNum = 0;
-        playTimeout = setTimeout(() => {
+
+        tabNums[i].classList.remove('playing');
+
+        setTimeout(() => {
             playNote(string, pos)
             selectedNotes[i].classList.remove('playing');
             selectedNotes[i].offsetWidth;
@@ -1187,13 +1191,15 @@ function playSequence() {
                 console.log(pageNum)
                 if(i == selectedNotes.length -1) {
                     setTimeout(() => {
-                        document.querySelector(".tabArea").style.display = "none";
-                        document.querySelector(".tabSequence").style.left = "3px";
+                            document.querySelector(".tabArea").style.display = "none";
+                            document.querySelector(".tabSequence").style.left = "3px";
+                            count--;
+                            
                     }, 2000)
                 }
         }, time * count)
         count++;
-        firstTime = false;
+       
     }
    // console.log(playTimeout)
 }
