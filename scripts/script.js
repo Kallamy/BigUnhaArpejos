@@ -1013,6 +1013,7 @@ function removeChord() {
         fret.classList.remove("fourthFinger");
         triggerBtns[string-1].innerText = defaultNotes[string-1];
     })
+    playPositions = [0,0,0,0,0,0];
 }
 // Play note function
 function playNote(string, pos) {
