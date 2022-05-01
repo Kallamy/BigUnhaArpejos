@@ -209,6 +209,7 @@ chordPositions = [0,0,0,0,0,0];
 nutPosition = 0;
 initialChordPositions = [0,0,0,0,0,0];
 chordFingers = [0,0,0,0,0,0];
+chordPress = [true, true, true, true, true, true];
 pressedPositions = [0,0,0,0,0,0];
 playPositions = [0,0,0,0,0,0];
 
@@ -225,20 +226,25 @@ limitValue = showNumber.value;
 
 rangeCount = 1;
 
+keyboardController();
 
 // Buttons click events
-btnRight.addEventListener("click", () => {
+btnRight.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
     if(limits[0] >= 2) {
         limitStart --
         setRange();
         rangeCount = 1;
+        setMode();
     }
 });
-btnLeft.addEventListener("click", () => {
+btnLeft.addEventListener("click", (e) => {
+    e.stopImmediatePropagation();
     if(limits[1] <= 14) {
         limitStart ++
         setRange();
         rangeCount = 1;
+        setMode();
     }
 });
 
@@ -268,6 +274,7 @@ showNumber.addEventListener("change", () => {
 setRange();
 
 chordItens = document.querySelectorAll(".chordItem");
+removeButtons = document.querySelectorAll(".removeButton");
 selectedNotes = document.querySelectorAll(".fret.red");
 chordIndex = 0;
 chordItensList = [7];
@@ -284,39 +291,73 @@ if(chordIndex == 0) {
 }
 
 // Chords menu click event
+
+removeButtons.forEach((removeButton) => {
+    removeButton.addEventListener("click", (e) => {
+        for(let i = 0; i < chordItens.length; i++) {
+            chordItens[i].classList.remove("selected");
+            removeButtons[i].style.zIndex = "0";
+        }
+        notes = [];
+        
+        setNotes();
+        clearNotes();
+        if(chord.includes("7") && chord.includes("9")) {
+            chord = "C7(9)";
+        }
+        if(chord.includes("7")) {
+            chord = "C7";
+            removeButtons[chordIndex].classList.remove("selected");
+        } else if(chord.includes("9")) {
+            chord = "C9";
+        }
+        document.querySelector(".notesArea").innerText = "";
+        disabledStrings = [];
+        removeChord();
+        for(let i = 0; i<triggerBtns.length; i++) {
+            triggerBtns[i].innerText = defaultNotes[i];
+        }
+        colorTriggers();
+    })
+})
+
 chordItens.forEach((chordItem) => {
     if(chordIndex == 0) {
         chordItem.classList.remove("selected");
     }
-    chordItem.addEventListener("click", () => {
+    chordItem.addEventListener("click", (e) => {
         document.querySelector("#sevenCheck").removeAttribute("disabled");
         document.querySelector("#nineCheck").removeAttribute("disabled");
         clearNotes();
         setNotes();
+        //notes = getChordNotes(); 
         setChord();
         setMode();
         targetChord = chordItem.innerText;
         
+        if(chordItem.className.includes("selected")) {
     
+        }
         chord = targetChord;
         
         chordIndex = chordItensList.indexOf(targetChord)
         for(let i = 0; i < chordItens.length; i++) {
             chordItens[i].classList.remove("selected");
             selectedChordIndex = chordIndex;
+            removeButtons[i].style.zIndex = "0";
         }
-        chordItem.classList.add("selected")
-        removeChord();
-        if(mode == "chords") {
-            drawChord();
-        }
+        chordItens[chordIndex].classList.add("selected");
+        removeButtons[chordIndex].style.zIndex = "99";
+        
+        
     });
 
     if(chordItem.innerText == chord) {
       //  chordItem.classList.add("selected");
     }
 }) 
- 
+
+
 tabSequence = document.querySelector(".tabSequence");
 
 // Notes setting function
@@ -324,10 +365,8 @@ tabSequence = document.querySelector(".tabSequence");
 function setNotes() {
     pressNote();
     if(chord != "") {
-        console.log(isPlaying)
         if(isPlaying) {
-            //clearTimeout(playTimeout);
-            console.log("Stop timeout")
+            //clearTimeout(playTimeout)
         }
         // define the fundamental note according to the abbreviation of the chord
         if(chord.includes("C")) {
@@ -436,10 +475,10 @@ function setNotes() {
             
                 
                     fret.addEventListener("click", playNoteClick); 
-
+                    fret.style.cursor = "pointer";
                     if(note.includes("♭")) {
                         notesList = document.querySelectorAll(".noteSpan");
-                        fund = notesList[0].innerText;
+                       // fund = notesList[0].innerText;
                     }
                     if(note == fund) {
                         fret.style.fontWeight = "1000";
@@ -606,54 +645,49 @@ function getChordNotes(fund) {
 function pressNote() {
     triggerBtns = document.querySelectorAll(".triggerButton");
     frets = document.querySelectorAll(".fret");
-    stringId = 0;
-    
+    stringId = 0
     let isPressed = false;
     let clicks = 1;
     let canPress = true;
-        frets.forEach(fret => {
-            fret.style.cursor = "pointer";
+    frets.forEach(fret => {
+            stringId = fret.parentElement.getAttribute("data-id");
+            //fret.style.cursor = "pointer";
+            
             if(mode != "chords") {
                 fret.style.cursor = "normal";
-            }
+                if(disabledStrings.includes(parseInt(stringId)) && pressedPositions[stringId-1] > nutPosition) {
+                    fret.classList.add("pressed")
+                }
+            } 
+
             fret.addEventListener("click", (e) => {
                 if(mode == "chords") {
                     stringId = fret.parentElement.getAttribute("data-id")
                     noteTxt = fret.getAttribute("data-note");
                     pressedFret = e.currentTarget;
                     frets.forEach((fret) => {
-                
+
+                        
                         if(pressedFret.getAttribute("data-pos") == chordPositions[stringId-1]) {
                             
-                                chordPositions[stringId-1] = nutPosition;
-                         
+                                for(i=0;i<frets.length;i++) {
+                                    triggerBtns[stringId-1].innerText = frets[nutPosition].getAttribute("data-note");
+                                }
                           
                         }
                         if(fret.parentElement.getAttribute("data-id") == stringId ){
                             if(isPressed == false) {
-                                if(canPress) {
+                                if(chordPress[stringId-1] == true) {
                                     fret.classList.remove("pressed");
                                     fret.classList.remove("firstFinger");
                                     fret.classList.remove("secondFinger");
                                     fret.classList.remove("thirdFinger");
                                     fret.classList.remove("fourthFinger");
-                                }
-                                /*
-                                frets[stringId-1].foreach((fr, index) => {
-                                    console.log(index)
-                                    if(index == chordPositons[stringId]) {
-                                        if(chordFingers[stringId] == 1) {
-                                            fret.classList.add("firstFinger");
-                                        } else if(chordFingers[stringId] == 2) {
-                                            fret.classList.add("secondFinger");
-                                        } else if(chordFingers[stringId] == 3) {
-                                            fret.classList.add("thirdFinger");
-                                        } else {
-                                            fret.classList.add("fourthFinger");
-                                        }
+                                } else {
+                                    if(fret.getAttribute("data-pos") == chordPositions[stringId-1]) {
+                                        
                                     }
-                                }) 
-                                */
+                                }
                             }
                         }
                         
@@ -662,38 +696,52 @@ function pressNote() {
                         canPress = true
                     } else {
                         canPress = false
-                        fret.style.cursor = "normal"
+                        fret.style.cursor = "normal";
                     }
 
                     if(clicks > 1) {
                         isPressed = true
+                        
                     }
                     if(isPressed){
                         fret.classList.remove("pressed");
                         isPressed = true;
                         clicks = 1;
                         if(canPress) {
-                            triggerBtns[stringId-1].innerText = defaultNotes[stringId-1];
+                           triggerBtns[stringId-1].innerText = defaultNotes[stringId-1];
                         }
                         // chordPositions[stringId -1] = 0;
                         stringFrets = strings[stringId-1].querySelectorAll(".fret")
                         stringFrets.forEach(frt => {
                             if(frt.getAttribute("data-pos") == chordPositions[stringId-1]) {
-                                chordPositions[stringId-1] = 0;
-                                if(chordFingers[stringId-1] == 1) {
-                                    frt.classList.add("firstFinger");
-                                } else if(chordFingers[stringId-1] == 2) {
-                                    frt.classList.add("secondFinger");
-                                } else if(chordFingers[stringId-1] == 3) {
-                                    frt.classList.add("thirdFinger");
+                               // chordPositions[stringId-1] = 0;
+                                hasFinger = true;
+                                if(chordPress[stringId-1] == true) {
+                                    if(chordFingers[stringId-1] == 1) {
+                                       frt.classList.add("firstFinger");
+                                    } else if(chordFingers[stringId-1] == 2) {
+                                      frt.classList.add("secondFinger");
+                                    } else if(chordFingers[stringId-1] == 3) {
+                                       frt.classList.add("thirdFinger");
+                                    } else {
+                                      frt.classList.add("fourthFinger");
+                                    }
                                 } else {
-                                    frt.classList.add("fourthFinger");
                                 }
                                 if(canPress) {
                                     chordPositions[stringId-1] = parseInt(frt.getAttribute("data-pos"))
                                     playPositions[stringId-1] = frt.getAttribute("data-pos")
                                     
-                                    triggerBtns[stringId-1].innerText = frt.getAttribute("data-note")
+                                    if(chordPress[stringId-1] == true) {
+                                        triggerBtns[stringId-1].innerText = frt.getAttribute("data-note")
+                                    } else {
+                                        if(nutPosition > 0) {
+                                            triggerBtns[stringId-1].innerText = stringFrets[nutPosition-1].getAttribute("data-note");
+                                        } else {
+                                            triggerBtns[stringId-1].innerText = defaultNotes[stringId-1];
+                                        }
+                                    }
+        
                                 }
                                 
                             }
@@ -701,44 +749,85 @@ function pressNote() {
                         colorTriggers();
 
                     } else {
-                        if(clicks == 1) {
-
-                            
-                        }
                         if(chordPositions[stringId-1] != fret.getAttribute("data-pos")) {
-                            
                             clicks++
                             if(canPress) {
-                                triggerBtns[stringId-1].innerText = noteTxt;
+                               triggerBtns[stringId-1].innerText = noteTxt;
                             }
+                            stringFrets = strings[stringId-1].querySelectorAll(".fret")
                             pressedPositions[stringId-1] = parseInt(fret.getAttribute("data-pos"));
                             playPositions = pressedPositions;
                             if(canPress) {
-                                fret.classList.add("pressed"); 
+                                if(pressedFret.getAttribute("data-pos") != chordPositions[stringId-1]) {
+                                    fret.classList.add("pressed"); 
+                                } else {
+                                    fret.classList.remove("pressed"); 
+                                    triggerBtns[stringId-1].innerText = stringFrets[nutPosition-1].getAttribute("data-note");
+                                }
+                                
                             }
-                            
                         } else if(clicks > 1) {
-                            //chordPositions[stringId-1] = 0;
                             if(canPress) {
-                                fret.classList.remove("pressed");
+                               fret.classList.remove("pressed");                           
                             }
-                             clicks = 1;
-                            
+                            clicks = 1;
+
+                            if(clicks == 1) {
+                                if(fret.getAttribute("data-pos") != pressedPositions[stringId-1]) {
+                                }
+                                fret.classList.add("pressed");
+                            }
+                            if(fret.getAttribute("data-pos") == pressedPositions[stringId-1]) {
+                                //fret.classList.remove("pressed");
+                            }
                             if(chordPositions[stringId-1] == fret.getAttribute("data-pos")) {
-                                chordPositions[stringId-1] = parseInt(fret.getAttribute("data-pos"));
+                                if(chordPress[stringId-1] == true) {
+                                    chordPositions[stringId-1] = parseInt(fret.getAttribute("data-pos"));
+                                }
                                 if(initialChordPositions[stringId-1] == pressedFret.getAttribute("data-pos")) {
-                                    if(chordFingers[stringId-1] == 1) {
-                                        fret.classList.add("firstFinger");
-                                    } else if(chordFingers[stringId-1] == 2) {
-                                        fret.classList.add("secondFinger");
-                                    } else if(chordFingers[stringId-1] == 3) {
-                                        fret.classList.add("thirdFinger");
-                                    } else {
-                                        fret.classList.add("fourthFinger");
+                                    if(chordPress[stringId-1] == true) {
+                                        /*if(chordFingers[stringId-1] == 1) {
+                                            fret.classList.add("firstFinger");
+                                        } else if(chordFingers[stringId-1] == 2) {
+                                           fret.classList.add("secondFinger");
+                                        } else if(chordFingers[stringId-1] == 3) {
+                                             fret.classList.add("thirdFinger");
+                                        } else {
+                                             fret.classList.add("fourthFinger");
+                                        }*/
                                     }
+                                    
                                 }
                             }
                             
+                        } 
+                        if(chordPositions[stringId-1] == fret.getAttribute("data-pos")) {
+                            stringFrets = strings[stringId-1].querySelectorAll(".fret")
+                
+                           // pressedFret.classList.remove("pressed");
+                            //chordPositions[stringId-1] = nutPosition;
+                            if(nutPosition > 0) {
+                                triggerBtns[stringId-1].innerText = stringFrets[nutPosition-1].getAttribute("data-note");
+                            } else {
+                                triggerBtns[stringId-1].innerText = defaultNotes[stringId-1];
+                            }
+
+                            if(chordPress[stringId-1] == true) {
+                                chordPress[stringId-1] = false;
+                            } else {
+                                chordPress[stringId-1] = true;
+                    
+                                if(chordFingers[stringId-1] == 1) {
+                                    fret.classList.add("firstFinger");
+                                } else if(chordFingers[stringId-1] == 2) {
+                                    fret.classList.add("secondFinger");
+                                } else if(chordFingers[stringId-1] == 3) {
+                                    fret.classList.add("thirdFinger");
+                                } else {
+                                    fret.classList.add("fourthFinger");
+                                }
+                                triggerBtns[stringId-1].innerText = stringFrets[chordPositions[stringId-1]-1].getAttribute("data-note")
+                            }
                         }
                         colorTriggers();
                     }
@@ -780,6 +869,7 @@ function drawChord() {
         for(let i = 0; i < chrd.positions.length; i++) {
             
             disabledStrings = chrd.disabled;
+            
             if(chordIndex != 0) {
             }
            
@@ -828,6 +918,9 @@ function drawChord() {
             //strings[3].setAttribute("disabled", true)
             if(strings[s].getAttribute('disabled') == 'true') {
                 triggerBtns[s].innerText = "x"
+                frts.forEach(frt => {
+                    frt.classList.add("selected")
+                })
             }
        }
         /*chordPositions[string-1] = parseInt(fret.getAttribute("data-pos"))
@@ -963,6 +1056,7 @@ function setChord() {
         })
     }
 
+    chordPress = [true, true, true, true, true, true];
     chordItens = document.querySelectorAll(".chordItem");
     chordType = document.querySelector("#typeSelector");
     sevenCheck = document.querySelector("#sevenCheck");
@@ -1188,7 +1282,6 @@ function playSequence() {
                         pageNum++;
                     }
                 }
-                console.log(pageNum)
                 if(i == selectedNotes.length -1) {
                     setTimeout(() => {
                             document.querySelector(".tabArea").style.display = "none";
@@ -1201,7 +1294,6 @@ function playSequence() {
         count++;
        
     }
-   // console.log(playTimeout)
 }
 
 canPlay = false;
@@ -1304,6 +1396,75 @@ function drawTab(selectedNotes) {
 function clearTab() {
     tabSequence = document.querySelector(".tabSequence");
     tabSequence.innerHTML = "";
+}
+
+function keyboardController() {
+    document.addEventListener("keydown", (event) => {
+        setMode();
+        event.stopImmediatePropagation();
+        // console.log(`key=${event.key},code=${event.code}`);
+        if(mode == "chords") {
+            if(event.key == "w"){
+                chordBeat("up");
+            } else if(event.key == "s") {
+                chordBeat("down");
+            }
+            if(!disabledStrings.includes(parseInt(event.key))) {
+
+                playNote(parseInt(event.key), playPositions[parseInt(event.key)-1]);
+                triggerBtns[event.key-1].classList.remove('playing');
+                triggerBtns[event.key-1].offsetWidth;
+                triggerBtns[event.key-1].classList.add('playing');
+            }
+           
+        } else {
+            
+            if(event.key == "ArrowUp"){
+                if(limitValue < 14) {
+                    limitValue++;
+                    setRange();
+                    showNumber.value = limitValue;
+                }
+            } else if(event.key == "ArrowDown") {
+                if(limitValue > 0) {
+                    limitValue--;
+                    setRange();
+                    showNumber.value = limitValue;
+                }
+            }
+            if(event.key == "ArrowRight"){
+                if(limits[0] >= 2) {
+                    limitStart --;
+                    setRange();
+                    rangeCount = 1;
+                }
+            } else if(event.key == "ArrowLeft") {
+                if(limits[1] <= 14) {
+                    limitStart ++;
+                    setRange();
+                    rangeCount = 1;
+                }
+            }
+            if(event.code == "Space") {
+                playSequence();
+            }
+            if(mode == "scale") {
+                document.querySelectorAll(".noteSpan").forEach((note) => {
+                    note.classList.add('scale')
+                })
+            }
+
+            let playTime = document.querySelector("#playTime");
+            if(event.code == "Minus") {
+                if(playTime.value >= 20) {
+                    playTime.value = parseInt(playTime.value) - 10;
+                }
+            } else if(event.code == "Equal") {
+                playTime.value = parseInt(playTime.value) + 10;
+            }
+        }
+    })
+
 }
 
 function setSound(string, pos){ 
