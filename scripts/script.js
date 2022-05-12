@@ -295,6 +295,7 @@ if(chordIndex == 0) {
 
 playButton = document.querySelector(".btnPlay")
 
+playButton.disabled = true;
 removeButtons.forEach((removeButton) => {
     removeButton.addEventListener("click", (e) => {
         for(let i = 0; i < chordItens.length; i++) {
@@ -708,6 +709,7 @@ function pressNote() {
                         clicks = 1;
                         if(canPress) {
                            triggers[stringId-1].innerText = defaultNotes[stringId-1];
+                           playPositions[stringId-1] = 0;
                         }
                         // chordPositions[stringId -1] = 0;
                         stringFrets = strings[stringId-1].querySelectorAll(".fret")
@@ -775,7 +777,7 @@ function pressNote() {
                                 }
                                 fret.classList.add("pressed");
                             }
-                            
+
                             if(chordPositions[stringId-1] == fret.getAttribute("data-pos")) {
                                 if(chordPress[stringId-1] == true) {
                                     chordPositions[stringId-1] = parseInt(fret.getAttribute("data-pos"));
@@ -1297,28 +1299,26 @@ function chordBeat(direction) {
                     triggerBtns[i].classList.remove('playing');
                     triggerBtns[i].offsetWidth;
                     triggerBtns[i].classList.add('playing');
-                    }
-            }, 10 + i*30)
+                    console.log(playPositions[i])
+                }
+            }, 10 + i*25)
             
         }
     } else if(direction === "down") {
-        triggerBtns = document.querySelectorAll(".triggerButton");
-        triggerBtns = [...triggerBtns];
-        triggerBtns.reverse();
-    
-        for(let i=triggerBtns.length - 1; i>=0; i--) { 
-            
-            setTimeout(() => {
-                stringId = triggerBtns[i].getAttribute("data-id");
+        for(let i=0; i<= triggerBtns.length; i++){ 
+            setTimeout(function() {
+                index = (triggerBtns.length - 1 - i)
+                stringId = triggerBtns[index].getAttribute("data-id");
                 if(!disabledStrings.includes(parseInt(stringId))) {
-                    playNote(stringId, playPositions[i]);
-                    triggerBtns[i].classList.remove('playing');
-                    triggerBtns[i].offsetWidth;
-                    triggerBtns[i].classList.add('playing');
+                    playNote(stringId, playPositions[index]);
+                    triggerBtns[index].classList.remove('playing');
+                    triggerBtns[index].offsetWidth;
+                    triggerBtns[index].classList.add('playing');
+                    console.log(playPositions[index])
                 }
-            }, 10 + i*30)
-            
+            }, 10 + i*25);
         }
+        console.log(playPositions)
     }
 }
 
