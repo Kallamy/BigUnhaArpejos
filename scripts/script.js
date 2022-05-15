@@ -160,8 +160,16 @@ function setMode() {
         document.querySelectorAll(".noteSpan").forEach((note) => {
             note.classList.add('scale')
         })
-        isBemol = false;
+        isBemol = true
         updateAllNotes();
+        
+      /*  if(chord == "F" || chord == "Fm") {
+            if(mode == "scale") {   
+                isBemol = false;
+            } 
+            updateAllNotes();
+        }
+        */
         
         for(var i = 0; i < chordItens.length; i++) {
             if(chordType.value == "major") {
@@ -377,6 +385,7 @@ function setNotes() {
             //clearTimeout(playTimeout)
         }
         // define the fundamental note according to the abbreviation of the chord
+        bemolFund = "";
         if(chord.includes("C")) {
             fund = "dó";
             if(chord.includes("#")) {
@@ -476,6 +485,9 @@ function setNotes() {
                     if(note == "mi") {
                         fret.classList.add("orange");
                     }
+                    if(note == "mi#") {
+                        fret.classList.add("red");
+                    }
                     if(note == "fá") {
                         fret.classList.add("red");
                     }
@@ -542,8 +554,8 @@ function clearNotes() {
 setNotes();
 
 function updateAllNotes() {
-    allNotes = ['dó',((isBemol) ? 'ré♭' : 'dó#'),'ré', ((isBemol) ? 'mi♭' : 'ré#' ), 'mi', 'fá', ((isBemol) ? 'sol♭' : 'fá#'), 'sol', ((isBemol) ? 'lá♭' : 'sol#'), 'lá', ((isBemol) ? 'si♭' : 'lá#'), 'si',
-                'dó',((isBemol) ? 'ré♭' : 'dó#'),'ré', ((isBemol) ? 'mi♭' : 'ré#'), 'mi', 'fá', ((isBemol) ? 'sol♭' : 'fá#'), 'sol', ((isBemol) ? 'lá♭' : 'sol#'), 'lá', ((isBemol) ? 'si♭' : 'lá#'), 'si'];
+    allNotes = ['dó',((isBemol) ? 'ré♭' : 'dó#'),'ré', ((isBemol) ? 'mi♭' : 'ré#' ), 'mi', ((isBemol) ? 'fá' : 'mi#'), ((isBemol) ? 'sol♭' : 'fá#'), 'sol', ((isBemol) ? 'lá♭' : 'sol#'), 'lá', ((isBemol) ? 'si♭' : 'lá#'), 'si',
+                'dó',((isBemol) ? 'ré♭' : 'dó#'),'ré', ((isBemol) ? 'mi♭' : 'ré#'), 'mi', ((isBemol) ? 'fá' : 'mi#'), ((isBemol) ? 'sol♭' : 'fá#'), 'sol', ((isBemol) ? 'lá♭' : 'sol#'), 'lá', ((isBemol) ? 'si♭' : 'lá#'), 'si'];
 }
 // Get the notes from the scale
 function getScaleNotes(fund) {
@@ -569,7 +581,7 @@ function getScaleNotes(fund) {
     if(!chord.includes('m')) {
         isBemol = true;
         updateAllNotes();
-        if( chord == "D" ||
+        if( chord == "D" || 
          chord == "E" || chord == "F#" ||  
          chord == "G" || chord == "A" || 
          chord == "B" ) {
@@ -584,10 +596,14 @@ function getScaleNotes(fund) {
         selection.push(allNotes[fundIndex + 7]);
         selection.push(allNotes[fundIndex + 9]);
         selection.push(allNotes[fundIndex + 11]);
+
+        if(selection[0] == undefined) {
+            selection = ["fá", "sol", "lá", "si♭", "dó", "ré", "mi"]
+        }
     } else {
         isBemol = true;
         updateAllNotes();
-        if(chord == "C#m" || chord == "F#m" || 
+        if(chord == "C#m" || chord == "D#m" || chord == "F#m" || 
         chord == "G#m" || chord == "Bm") {
             isBemol = false;
             updateAllNotes();
@@ -611,7 +627,14 @@ function getScaleNotes(fund) {
         }
         selection.push(allNotes[fundIndex + 8]);
         selection.push(allNotes[fundIndex + 10]);
+
+        if(selection[0] == undefined) {
+            selection = ["fá", "sol", "lá♭", "si♭", "dó", "ré♭", "mi♭"]
+        }
     }
+
+   
+
     if(completeScale) {
         selection = allNotes
     } 
@@ -620,17 +643,26 @@ function getScaleNotes(fund) {
 
 // Get the notes of the chord
 function getChordNotes(fund) {
-
     fundIndex = allNotes.indexOf(fund);
 
     selection = [];
     isBemol = false;
     updateAllNotes();
     if(chord.includes("m")) {
+        if(chord == "Fm") {
+            isBemol = true;
+            updateAllNotes();
+        }
         selection.push(allNotes[fundIndex]);
         selection.push(allNotes[fundIndex + 3]);
         selection.push(allNotes[fundIndex + 7]);
     } else {
+        isBemol = false;
+        updateAllNotes();
+        if(chord == "F") {
+            isBemol = true;
+            updateAllNotes();
+        }
         selection.push(allNotes[fundIndex]);
         selection.push(allNotes[fundIndex + 4]);
         selection.push(allNotes[fundIndex + 7]);
@@ -643,6 +675,7 @@ function getChordNotes(fund) {
         selection.push(allNotes[fundIndex + 2]);
     }
     
+    console.log(selection);
     return selection;
 }
 
@@ -975,7 +1008,7 @@ function colorTriggers() {
         if(trigger.innerText == "mi") {
             trigger.classList.add("orange");
         }
-        if(trigger.innerText == "fá") {
+        if(trigger.innerText == "fá" || trigger.innerText == "mi#") {
             trigger.classList.add("red");
         }
         if(trigger.innerText == "fá#" || trigger.innerText == "sol♭") {
@@ -1131,6 +1164,7 @@ function setChord() {
     }
     hasLoad = true;
     setNotes();
+
     chordItens.forEach((chordItem) => {
         if(chordItem.innerText == chord) {
             
@@ -1189,6 +1223,20 @@ function changeSignals(notes) {
             
             }
         }
+
+        if(notes.includes("mi#")) {
+            if(fret.getAttribute("data-note") == "fá") {
+                fret.setAttribute("data-note", "mi#")
+            
+            }
+        }
+        if(notes.includes("fá")) {
+            if(fret.getAttribute("data-note") == "mi#") {
+                fret.setAttribute("data-note", "fá")
+            
+            }
+        }
+
         if(notes.includes("fá#")) {
             if(fret.getAttribute("data-note") == "sol♭") {
                 fret.setAttribute("data-note", "fá#")
