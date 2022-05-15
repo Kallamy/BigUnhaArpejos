@@ -160,16 +160,20 @@ function setMode() {
         document.querySelectorAll(".noteSpan").forEach((note) => {
             note.classList.add('scale')
         })
+
         isBemol = true
         updateAllNotes();
-        
-      /*  if(chord == "F" || chord == "Fm") {
-            if(mode == "scale") {   
-                isBemol = false;
-            } 
+
+        if(mode != "chords") {
+            isBemol = false;
             updateAllNotes();
+
+            if(chord == "F") {
+                isBemol = true;
+                updateAllNotes();
+            }
         }
-        */
+        
         
         for(var i = 0; i < chordItens.length; i++) {
             if(chordType.value == "major") {
@@ -656,6 +660,10 @@ function getChordNotes(fund) {
         selection.push(allNotes[fundIndex]);
         selection.push(allNotes[fundIndex + 3]);
         selection.push(allNotes[fundIndex + 7]);
+
+        if(selection[0] == undefined) {
+            selection = ["fá", "lá♭", "dó"];
+        }
     } else {
         isBemol = false;
         updateAllNotes();
@@ -666,6 +674,10 @@ function getChordNotes(fund) {
         selection.push(allNotes[fundIndex]);
         selection.push(allNotes[fundIndex + 4]);
         selection.push(allNotes[fundIndex + 7]);
+
+        if(selection[0] == undefined) {
+            selection = ["fá", "lá", "dó"];
+        }
     }
 
     if(chord.includes("7")) {
@@ -675,6 +687,7 @@ function getChordNotes(fund) {
         selection.push(allNotes[fundIndex + 2]);
     }
     
+
     console.log(selection);
     return selection;
 }
