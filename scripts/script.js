@@ -790,7 +790,7 @@ function pressNote() {
                 stringId = fret.parentElement.getAttribute("data-id")
                 noteTxt = fret.getAttribute("data-note");
                 pressedFret = e.currentTarget;
-                console.log(nut_position)
+            
                 frets.forEach((fret) => {
 
                     if(pressedFret.getAttribute("data-pos") == chordPositions[stringId-1]) {
@@ -899,8 +899,6 @@ function pressNote() {
                         pressedPositions[stringId-1] = parseInt(fret.getAttribute("data-pos"));
                         playPositions = pressedPositions;
                         if(canPress) {
-                           
-                            console.log(chordPositions )
                             if(pressedFret.getAttribute("data-pos") != chordPositions[stringId-1] /* && pressedFret.getAttribute("data-pos") >= nut_position */) {
                                 fret.classList.add("pressed"); 
                             } else {
@@ -942,12 +940,10 @@ function pressNote() {
                     }
                     if(pressedFret.getAttribute("data-pos") < nutPosition) {
                         pressedFret.classList.remove("pressed");
-                        console.log(chordPositions)
                         if(chordPress[stringId-1] == true) {
                             triggers[stringId-1].innerText = stringFrets[chordPositions[stringId-1]-1 ].getAttribute("data-note");
                             //chordPress[stringId-1] = false;
                         } else {
-                            console.log(chordPress[stringId-1])
                             triggers[stringId-1].innerText = stringFrets[nutPosition -1].getAttribute("data-note");
                         }
                        
@@ -1104,10 +1100,7 @@ function drawChord() {
                 chordPositions[string-1] = chordRef.nut[0] + chordOffset;
                 chordPositions[string-1] = nutPos;
             } 
-            console.log(chordRef.positions[0])
-            
-        
-        console.log(chordPositions)
+
 
           if(string == i+1 && pos == (chordRef.positions[i] == 0 ? chordRef.positions[i]: chordRef.positions[i] + chordOffset)) {
     
