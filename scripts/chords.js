@@ -46,6 +46,7 @@ if(c != ""){
                     acronym: "E",
                     positions: [0,0,1,2,2,0],
                     fingers: [0,0,1,3,2,0],
+                    nut: null,
                     disabled: [],
                     current: 1,
                     variants: [["D#", 1], ["C#", 3], ["A#", 6]]
@@ -1143,6 +1144,5 @@ if(c != ""){
             ];
            }
         }
-        chordObj[0].positions = [5,5,5,5,5,5]
     }
 }

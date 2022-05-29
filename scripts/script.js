@@ -613,6 +613,8 @@ function clearNotes() {
     frets = document.querySelectorAll(".fret");
     frets.forEach(fret => {
         fret.removeEventListener("click", playNoteClick); 
+        fret.innerText = "";
+
         fret.classList.remove("show");
         fret.classList.remove("purple");
         fret.classList.remove("purple2");
@@ -626,7 +628,6 @@ function clearNotes() {
         fret.classList.remove("orange");
         fret.classList.remove("red");
         fret.classList.remove("red2");
-        fret.innerText = "";
     });
 }
 
@@ -1285,7 +1286,7 @@ function removeChord() {
     document.querySelector(".nut").style.display = "none";
     frets.forEach(fret => {
         string = fret.parentElement.getAttribute("data-id");
-        fret.innerText = "";
+        //.innerText = "";
         fret.classList.remove("firstFinger");
         fret.classList.remove("secondFinger");
         fret.classList.remove("thirdFinger");
