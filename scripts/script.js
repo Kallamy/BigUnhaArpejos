@@ -1286,7 +1286,7 @@ function removeChord() {
     document.querySelector(".nut").style.display = "none";
     frets.forEach(fret => {
         string = fret.parentElement.getAttribute("data-id");
-        //.innerText = "";
+        fret.innerText = "";
         fret.classList.remove("firstFinger");
         fret.classList.remove("secondFinger");
         fret.classList.remove("thirdFinger");
