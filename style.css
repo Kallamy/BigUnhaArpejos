@@ -13,6 +13,7 @@
     --red2: #c25584;
 
     --finger: #457b9d;
+    --pressed: #8a817c;
   
 }
 * {
@@ -185,6 +186,7 @@ body {
     height: 140px;
     background: var(--finger);
     border: 2px solid #264653;
+    color: antiquewhite;
     font-weight: bold;
     z-index: 99;
     border-radius: 20px;
@@ -208,7 +210,7 @@ body {
 }
 
 .fret.pressed {
-    background: #8a817c;
+    background: #ddb892;
     border: 2px solid #463f3a;
 }
 .fret.firstFinger,
@@ -218,6 +220,7 @@ body {
     border: 2px solid #264653;
     background: var(--finger);
     font-weight: bold;
+    color: antiquewhite;
 }
 
 .fret.show {

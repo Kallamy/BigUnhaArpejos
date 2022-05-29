@@ -575,7 +575,7 @@ function setNotes() {
                     }
                     fret.style.fontWeight = "500";
                     fret.innerText = note;
-            
+                    
                 
                     fret.addEventListener("click", playNoteClick); 
             
@@ -807,11 +807,11 @@ function pressNote() {
                             fret.classList.remove("pressed");
                             if(pressedFret.getAttribute("data-pos") >= nutPosition) {
                                 if(chordPress[stringId-1] == true) {
+                                    fret.innerText = "";
                                     fret.classList.remove("firstFinger");
                                     fret.classList.remove("secondFinger");
                                     fret.classList.remove("thirdFinger");
                                     fret.classList.remove("fourthFinger");
-                                    fret.innerText = "";
                                     if(nut_position > 0 && nutDegree <= stringId) {
                                         pressedPositions[stringId-1] = nut_position;
                                     } else {
@@ -1285,8 +1285,10 @@ function drawNut(pos, strings) {
 function removeChord() {
     document.querySelector(".nut").style.display = "none";
     frets.forEach(fret => {
+        if(mode == "chords") {
+            fret.innerText = "";
+        }
         string = fret.parentElement.getAttribute("data-id");
-        fret.innerText = "";
         fret.classList.remove("firstFinger");
         fret.classList.remove("secondFinger");
         fret.classList.remove("thirdFinger");
