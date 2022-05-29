@@ -12,11 +12,8 @@
     --red: #fc5a58;
     --red2: #c25584;
 
-    --finger1: navy;
-    --finger2: blue;
-    --finger3: dodgerblue;
-    --finger4: deepskyblue;
-
+    --finger: #457b9d;
+  
 }
 * {
     user-select: none;
@@ -186,9 +183,14 @@ body {
     z-index: 100;
     width: 25px;
     height: 140px;
-    background: var(--finger1)
-    ;z-index: 99;
+    background: var(--finger);
+    border: 2px solid #264653;
+    font-weight: bold;
+    z-index: 99;
     border-radius: 20px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 .fret {
     position: relative;
@@ -206,22 +208,18 @@ body {
 }
 
 .fret.pressed {
-    background: darkslategray;
-    border: 1px solid #eee;
+    background: #8a817c;
+    border: 2px solid #463f3a;
 }
-.fret.firstFinger {
-    background: var(--finger1);
-}
-.fret.secondFinger {
-    background: var(--finger2);
-
-}
-.fret.thirdFinger {
-    background: var(--finger3);
-}
+.fret.firstFinger,
+.fret.secondFinger,
+.fret.thirdFinger,
 .fret.fourthFinger {
-    background: var(--finger4);
+    border: 2px solid #264653;
+    background: var(--finger);
+    font-weight: bold;
 }
+
 .fret.show {
     
 }

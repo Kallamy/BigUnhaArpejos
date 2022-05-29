@@ -810,7 +810,7 @@ function pressNote() {
                                     fret.classList.remove("secondFinger");
                                     fret.classList.remove("thirdFinger");
                                     fret.classList.remove("fourthFinger");
-    
+                                    fret.innerText = "";
                                     if(nut_position > 0 && nutDegree <= stringId) {
                                         pressedPositions[stringId-1] = nut_position;
                                     } else {
@@ -853,14 +853,19 @@ function pressNote() {
                             hasFinger = true;
                             if(!disabledStrings.includes(parseInt(stringId))) {
                                 if(chordPress[stringId-1] == true) {
+                                    fret.style.fontWeight = "bold";
                                     if(chordFingers[stringId-1] == 1) {
                                         frt.classList.add("firstFinger");
+                                        frt.innerText = "1"
                                     } else if(chordFingers[stringId-1] == 2) {
                                         frt.classList.add("secondFinger");
+                                        frt.innerText = "2"
                                     } else if(chordFingers[stringId-1] == 3) {
                                         frt.classList.add("thirdFinger");
+                                        frt.innerText = "3"
                                     } else {
                                         frt.classList.add("fourthFinger");
+                                        frt.innerText = "4"
                                     }
                                     pressedPositions[stringId-1] = frt.getAttribute("data-pos");
                                     playPositions = pressedPositions;
@@ -964,13 +969,18 @@ function pressNote() {
                             chordPress[stringId-1] = true;
                         
                        if(chordFingers[stringId-1] == 1) {
+                            fret.style.fontWeight = "bold"
                             fret.classList.add("firstFinger");
+                            fret.innerText = "1";
                         } else if(chordFingers[stringId-1] == 2) {
                             fret.classList.add("secondFinger");
+                            fret.innerText = "2";
                         } else if(chordFingers[stringId-1] == 3) {
                             fret.classList.add("thirdFinger");
+                            fret.innerText = "3";
                         } else {
-                        fret.classList.add("fourthFinger");
+                            fret.classList.add("fourthFinger");
+                            fret.innerText = "4";
                         }
                             
                          
@@ -1148,14 +1158,18 @@ function drawChord() {
                 chordPositions[2] = nutPos;*/
                // nutPos = nutPosition;
                 
-               
+               fret.style.fontWeight = "bold";
                 if(chordFingers[i] == 1) {
                     fret.classList.add("firstFinger");
+                    fret.innerText = "1";
                 } else if(chordFingers[i] == 2) {
                     fret.classList.add("secondFinger");
+                    fret.innerText = "2";
                 } else if(chordFingers[i] == 3) {
                     fret.classList.add("thirdFinger");
+                    fret.innerText = "3";
                 } else {
+                    fret.innerText = "4";
                     fret.classList.add("fourthFinger");
                 }
             }
@@ -1191,7 +1205,11 @@ function disableStrings() {
     for(let i = 0; i < 7; i++) {
         if(disabledStrings.includes(i+1)) {
             triggers[i].innerText = "x";
+           // triggers[i].style.backgroundColor = "#ccc5b9";
+           // triggers[i].style.fontWeight = "bold";
+
         }
+        //colorTriggers();
     }
     allStrings.forEach(string => {
         if(disabledStrings.includes(parseInt(string.getAttribute("data-id")))) {
@@ -1257,15 +1275,17 @@ function colorTriggers() {
 }
 function drawNut(pos, strings) {
     nut = document.querySelector(".nut");
-    nut.style.display = "block";
+    nut.style.display = "flex";
     nut.style.height = `${5 + 24 * strings}px`;
     nut.style.left = `${705 - 49 *pos}px`;
+   // nut.style.marginTop = `${(705 / 2) - 49 *pos}px`;
 }
 
 function removeChord() {
     document.querySelector(".nut").style.display = "none";
     frets.forEach(fret => {
         string = fret.parentElement.getAttribute("data-id");
+        fret.innerText = "";
         fret.classList.remove("firstFinger");
         fret.classList.remove("secondFinger");
         fret.classList.remove("thirdFinger");
