@@ -1221,7 +1221,7 @@ function drawChord() {
         chordPositions[0] = chordPositions[0] + chordOffset;
     }
     playPositions = chordPositions;
-    nut_position = nutPosition
+    // nut_position = nutPosition
 }
 
 function disableStrings() {
