@@ -726,9 +726,15 @@ function getChordNotes(fund) {
     fundIndex = allNotes.indexOf(fund);
 
     selection = [];
-    isBemol = false;
+
+    isBemol =
     updateAllNotes();
     if(chord.includes("m")) {
+    
+        if(chord == "C" || chord == "C#" || chord == "D#" || chord == "F" || chord == "F#" || chord == "G" || chord == "G#"){
+          // isBemol = true;
+         //  updateAllNotes();
+        }
         if(chord == "Fm") {
             isBemol = true;
             updateAllNotes();
@@ -741,8 +747,13 @@ function getChordNotes(fund) {
             selection = ["fá", "lá♭", "dó"];
         }
     } else {
-        isBemol = false;
-        updateAllNotes();
+        
+        if(chord == "C" || chord == "C#" || chord == "D#" || chord == "F" || chord == "F#" || chord == "G" || chord == "G#"){
+         //  isBemol = true;
+         //  updateAllNotes();
+        }
+      //  isBemol = false;
+       // updateAllNotes();
         if(chord == "F") {
             isBemol = true;
             updateAllNotes();
@@ -752,7 +763,7 @@ function getChordNotes(fund) {
         selection.push(allNotes[fundIndex + 7]);
 
         if(selection[0] == undefined) {
-            selection = ["fá", "lá", "dó"];
+            //selection = ["fá", "lá", "dó"];
         }
     }
 
@@ -799,7 +810,6 @@ function pressNote() {
                             for(i=0;i<frets.length;i++) {
                                 triggers[stringId-1].innerText = frets[nut_position].getAttribute("data-note");
                             }
-                        
                     }
 
                     if(fret.parentElement.getAttribute("data-id") == stringId){
@@ -812,11 +822,16 @@ function pressNote() {
                                     fret.classList.remove("secondFinger");
                                     fret.classList.remove("thirdFinger");
                                     fret.classList.remove("fourthFinger");
+                                    console.log(nutDegree)
+                                    console.log(stringId)
                                     if(nut_position > 0 && nutDegree <= stringId) {
                                         pressedPositions[stringId-1] = nut_position;
                                     } else {
                                         pressedPositions[stringId-1] = 0;
-                
+                                        if(!disabledStrings.includes(parseInt(stringId))) {
+                                            triggers[stringId-1].innerText = defaultNotes[stringId-1]; 
+                                        }
+                                        //playPositions[stringId-1] = 0;
                                     }
                                 } 
                             }
@@ -864,7 +879,7 @@ function pressNote() {
                                     } else if(chordFingers[stringId-1] == 3) {
                                         frt.classList.add("thirdFinger");
                                         frt.innerText = "3"
-                                    } else {
+                                    } else if(chordFingers[stringId-1] == 4){
                                         frt.classList.add("fourthFinger");
                                         frt.innerText = "4"
                                     }
@@ -980,7 +995,7 @@ function pressNote() {
                              } else if(chordFingers[stringId-1] == 3) {
                                  fret.classList.add("thirdFinger");
                                  fret.innerText = "3";
-                             } else {
+                             } else if(chordFingers[stringId-1] == 4){
                                  fret.classList.add("fourthFinger");
                                  fret.innerText = "4";
                              }
@@ -1101,11 +1116,10 @@ function drawChord() {
             chordPositions[string-1] = nutPos;
             if(chordRef.nut != null) {
                 chordPositions[string-1] = chordRef.nut[0] + chordOffset;
-                chordPositions[string-1] = nutPos;
+                chordPositions[string-1] = nutPos;   
                 
             } else {
                 chordPositions[string-1] = 0;
-                
             } 
             
             if(nutPos != 0) {
@@ -1116,20 +1130,25 @@ function drawChord() {
             if(string > chordRef.nut[1]) {
                 chordPositions[string-1] = 0;
             }
+
             // fix wrong finger position on the first string
             if(chordRef.positions[0] != 0) {
-                console.log(chordOffset)
                 if(chordOffset == 1) {
                     chordOffset = 0;
                 }
                 chordPositions[0] = chordRef.positions[0] + chordOffset;
             }
 
+            if(chord == "D" && currentFormat == 3) {
+                chordPositions[4] = nutPos;
+            }
+            if(chord == "D" && currentFormat == 4) {
+                chordPositions[1] = nutPos;
+            }
             if(chord == "D" && currentFormat == 6) {
                 chordPositions[1] = 10;
             }
 
-            console.log(chordPositions)
           if(string == i+1 && pos == (chordRef.positions[i] == 0 ? chordRef.positions[i]: chordRef.positions[i] + chordOffset)) {
     
               
@@ -1154,12 +1173,6 @@ function drawChord() {
                        // playPositions[0] = nutPos;
                         chordPositions[5] = nutPos;
                     }
-                   
-                    
-                    if(chordPositions[string-1] != nutPos) {
-                        
-                    }
-                    
             
                     triggerBtns[string-1].innerText = fret.getAttribute("data-note")
 
@@ -1169,10 +1182,6 @@ function drawChord() {
                     nutPos = 0;
                 }
                 
-                /*chordPositions[4] = nutPos;
-                chordPositions[3] = nutPos;
-                chordPositions[2] = nutPos;*/
-               // nutPos = nutPosition;
                 
                fret.style.fontWeight = "bold";
                 if(chordFingers[i] == 1) {
@@ -1184,7 +1193,7 @@ function drawChord() {
                 } else if(chordFingers[i] == 3) {
                     fret.classList.add("thirdFinger");
                     fret.innerText = "3";
-                } else {
+                } else if(chordFingers[i] == 4) {
                     fret.innerText = "4";
                     fret.classList.add("fourthFinger");
                 }
