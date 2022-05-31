@@ -822,9 +822,8 @@ function pressNote() {
                                     fret.classList.remove("secondFinger");
                                     fret.classList.remove("thirdFinger");
                                     fret.classList.remove("fourthFinger");
-                                    console.log(nutDegree)
-                                    console.log(stringId)
-                                    if(nut_position > 0 && nutDegree <= stringId) {
+                                
+                                    if(nut_position > 0 && nutDegree < stringId) {
                                         pressedPositions[stringId-1] = nut_position;
                                     } else {
                                         pressedPositions[stringId-1] = 0;
@@ -1064,7 +1063,7 @@ function drawChord() {
             chordRef = chrd;
         }
         if(chordRef.nut == undefined) {
-            chordRef.nut = [0,6]
+            chordRef.nut = [0,0]
         }
 
  
@@ -1112,76 +1111,66 @@ function drawChord() {
                     return 0;
                 }
             }) 
+        
+            chordPositions[0] = nutPos
+            chordPositions[1] = nutPos
+            chordPositions[2] = nutPos
+            chordPositions[3] = nutPos
+            chordPositions[4] = nutPos
+            chordPositions[5] = nutPos
             
-            chordPositions[string-1] = nutPos;
-            if(chordRef.nut != null) {
-                chordPositions[string-1] = chordRef.nut[0] + chordOffset;
-                chordPositions[string-1] = nutPos;   
-                
-            } else {
-                chordPositions[string-1] = 0;
-            } 
-            
-            if(nutPos != 0) {
-                chordPositions[string-1] = chordRef.nut[0] + chordOffset;
-                chordPositions[string-1] = nutPos;
-            } 
-
-            if(string > chordRef.nut[1]) {
-                chordPositions[string-1] = 0;
-            }
-
-            // fix wrong finger position on the first string
             if(chordRef.positions[0] != 0) {
                 if(chordOffset == 1) {
                     chordOffset = 0;
                 }
                 chordPositions[0] = chordRef.positions[0] + chordOffset;
             }
+            console.log(chordRef.acronym)
+            
+            chordPositions[0] = chordRef.positions[0] + chordOffset;
+            chordPositions[1] = chordRef.positions[1] + chordOffset;
+            chordPositions[2] = chordRef.positions[2] + chordOffset;
+            chordPositions[3] = chordRef.positions[3] + chordOffset;
+            chordPositions[4] = chordRef.positions[4] + chordOffset;
+            chordPositions[5] = chordRef.positions[5] + chordOffset;
 
-            if(chord == "D" && currentFormat == 3) {
-                chordPositions[4] = nutPos;
-            }
-            if(chord == "D" && currentFormat == 4) {
-                chordPositions[1] = nutPos;
-            }
-            if(chord == "D" && currentFormat == 6) {
-                chordPositions[1] = 10;
-            }
-
-          if(string == i+1 && pos == (chordRef.positions[i] == 0 ? chordRef.positions[i]: chordRef.positions[i] + chordOffset)) {
-    
-              
-              if(chordPositions[string-1] != (chordRef.positions[i] + chordOffset)) {
-                  positionDiff = chordPositions[string-1] - (chordRef.positions[i] + chordOffset);
-                    chordPositions[string-1] = 9;
-    
+            // fix wrong finger position on the first string
+            for(let p = 0; p < chordPositions.length; p++) {
+                if(chordPositions[p] == 0) {
+                    chordPositions[p] = nutPos + chordOffset;
                 }
+                if(chordPositions[p] < nutPosition) {
+                    chordPositions[p] = nutPosition;
+                }
+            }
+
+
+            if(chordRef.acronym == "D#") {
+                chordPositions[0] = chordPositions[0] - chordOffset;
+            }
+            
         
+            if(string == i+1 && pos == (chordRef.positions[i] == 0 ? chordRef.positions[i]: chordRef.positions[i] + chordOffset)) {
+                
+                
+                if(chordPositions[string-1] != (chordRef.positions[i] + chordOffset)) {
+                    positionDiff = chordPositions[string-1] - (chordRef.positions[i] + chordOffset);
+                    chordPositions[string-1] = 9;
+                    
+                }
+                
                 chordFingers = chordRef.fingers;
                
-           
-                
-                
                 nutDegree =  chordRef.nut[1];
     
                 if(chordRef.nut != null) {
                     if(chordRef.nut != null) {
                         drawNut(nutPos, nutDegree);
                     }
-                    if((chordRef.positions[string-1] + chordOffset) == 0 && string < chordRef.nut[1]) {
-                       // playPositions[0] = nutPos;
-                        chordPositions[5] = nutPos;
-                    }
-            
                     triggerBtns[string-1].innerText = fret.getAttribute("data-note")
-
-                    
-                    
                 } else {
                     nutPos = 0;
                 }
-                
                 
                fret.style.fontWeight = "bold";
                 if(chordFingers[i] == 1) {
@@ -1204,17 +1193,23 @@ function drawChord() {
             frts = strings[s].querySelectorAll(".fret");
             for(let t = 0; t <frts.length; t++) {
                 if(t+1 == chordPositions[s]) {
-                    triggerBtns[s].innerText = frts[t].getAttribute('data-note')
+                    triggerBtns[s].innerText = frts[t].getAttribute('data-note');
                     
+                    if(nutPos == 0) {
+                        triggerBtns[5].innerText = defaultNotes[5];
+                    } else {
+                        triggerBtns[5].innerText = frts[nutPos-1].getAttribute('data-note');
+                        
+                    }
+                    if(chordPositions[5] > 0) {
+                        triggerBtns[5].innerText = frts[chordPositions[5]-1].getAttribute('data-note');
+                    }
+                    if(disabledStrings.includes(string)) {
+                        triggerBtns[5].innerText = "x";
+                    }
                 }
             }
-            //strings[3].setAttribute("disabled", true)
-            /*if(strings[s].getAttribute('disabled') == 'true') {
-                triggerBtns[s].innerText = "x"
-                frts.forEach(frt => {
-                    frt.classList.add("selected")
-                })
-            }*/
+           
         }
     })
     if(chordRef.positions[0] != 0) {
