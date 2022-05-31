@@ -823,13 +823,18 @@ function pressNote() {
                                     fret.classList.remove("thirdFinger");
                                     fret.classList.remove("fourthFinger");
                                 
-                                    if(nut_position > 0 && nutDegree < stringId) {
+                                    
+                                    if(nutPos > 0 && nutDegree < stringId) {
                                         pressedPositions[stringId-1] = nut_position;
                                     } else {
                                         pressedPositions[stringId-1] = 0;
                                         if(!disabledStrings.includes(parseInt(stringId))) {
-                                            triggers[stringId-1].innerText = defaultNotes[stringId-1]; 
-                                        }
+                                            if(stringId-1 > nutDegree) {
+                                                triggers[stringId-1].innerText = defaultNotes[stringId-1]; 
+                                            } else {
+                                
+                                            }
+                                        }55
                                         //playPositions[stringId-1] = 0;
                                     }
                                 } 
@@ -841,6 +846,7 @@ function pressNote() {
                     
                     
                 })
+        
                 if(!disabledStrings.includes(parseInt(stringId)) && pressedPositions[stringId-1] >= nut_position) {
                     canPress = true
                 } else {
@@ -1125,7 +1131,6 @@ function drawChord() {
                 }
                 chordPositions[0] = chordRef.positions[0] + chordOffset;
             }
-            console.log(chordRef.acronym)
             
             chordPositions[0] = chordRef.positions[0] + chordOffset;
             chordPositions[1] = chordRef.positions[1] + chordOffset;
@@ -1216,7 +1221,7 @@ function drawChord() {
         chordPositions[0] = chordPositions[0] + chordOffset;
     }
     playPositions = chordPositions;
-   // nut_position = nutPosition
+    nut_position = nutPosition
 }
 
 function disableStrings() {
