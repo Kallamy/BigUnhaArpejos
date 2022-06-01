@@ -311,7 +311,7 @@ body {
     background-color: #aaa;
     border-radius: 5px;
     width: 900px;
-    height: 220px;
+    height: 225px;
     padding: 15px;
     
 }
@@ -503,10 +503,15 @@ button {
     margin-right: 25px;
 }
 .chordControllers {
+    margin-top: -10px;
     margin-left: -20px;
     margin-right: 25px;
 }
 #chordNumber {
+    display: inline-block;
+    width: 35px;
+    height: 20px;
+    text-align: left;
     font-size: 30px;
     padding: 10px;
 }

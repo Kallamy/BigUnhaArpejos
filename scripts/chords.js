@@ -269,7 +269,7 @@ if(c != ""){
                     nut: null,
                     disabled: [6,1],
                     current: 1,
-                    variants: [["A#7", 1], ["F7", 7], ["D#7", 8]]
+                    variants: [["A#7", 1], ["F7", 6], ["D#7", 8]]
                 },
     
             ];
@@ -329,7 +329,7 @@ if(c != ""){
                     nut: null,
                     disabled: [6,5],
                     current: 1,
-                    variants: [["x2", 0], ["x3", 0], ["A#9", 7], ["x1", 7]]
+                    variants: [["x2", 0], ["x3", 0], ["A#9", 7], ["x1", 5]]
                 },
                 {
                     acronym: "F#9",

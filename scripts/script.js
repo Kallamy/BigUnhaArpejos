@@ -195,7 +195,7 @@ function setMode() {
         document.querySelector("#checkArea").style.visibility = "visible";
         document.querySelector(".triggerArea").style.visibility = "hidden";
 
-        isBemol = false;
+        isBemol = true;
         updateAllNotes();
 
         removeChord()
@@ -727,54 +727,107 @@ function getChordNotes(fund) {
 
     selection = [];
 
-    isBemol =
-    updateAllNotes();
+    
     if(chord.includes("m")) {
     
-        if(chord == "C" || chord == "C#" || chord == "D#" || chord == "F" || chord == "F#" || chord == "G" || chord == "G#"){
-          // isBemol = true;
-         //  updateAllNotes();
-        }
-        if(chord == "Fm") {
-            isBemol = true;
-            updateAllNotes();
-        }
-        selection.push(allNotes[fundIndex]);
-        selection.push(allNotes[fundIndex + 3]);
-        selection.push(allNotes[fundIndex + 7]);
-
-        if(selection[0] == undefined) {
+        if(chord.includes("C") && !chord.includes("#")) {
+            selection = ["dó", "mi♭", "sol"];
+        } else if(chord.includes("C") && chord.includes("#")) {
+            selection = ["ré♭", "mi", "lá♭"];
+        } else if(chord.includes("D") && !chord.includes("#")) {
+            selection = ["ré", "fá", "lá"];
+        } else if(chord.includes("C") && chord.includes("#")) {
+            selection = ["mi♭", "sol♭", "si♭"];
+        } else if(chord.includes("E")) {
+            selection = ["mi", "sol", "si"];
+        } else if(chord.includes("F") && !chord.includes("#")) {
             selection = ["fá", "lá♭", "dó"];
+        } else if(chord.includes("F") && chord.includes("#")) {
+            selection = ["sol♭", "lá", "ré♭"];
+        } else if(chord.includes("G") && !chord.includes("#")) {
+            selection = ["sol", "si♭", "ré"];
+        } else if(chord.includes("G") && chord.includes("#")) {
+            selection = ["lá♭", "si", "mi♭"];
+        } else if(chord.includes("A") && !chord.includes("#")) {
+            selection = ["lá", "dó", "mi"];
+        } else if(chord.includes("A") && chord.includes("#")) {
+            selection = ["si♭", "ré♭", "fá"];
+        } else if(chord.includes("B")) {
+            selection = ["si", "ré", "fá#"];
         }
-    } else {
+    } else if(!chord.includes("m")){
         
-        if(chord == "C" || chord == "C#" || chord == "D#" || chord == "F" || chord == "F#" || chord == "G" || chord == "G#"){
-         //  isBemol = true;
-         //  updateAllNotes();
+        if(chord.includes("C") && !chord.includes("#")) {
+            selection = ["dó", "mi", "sol"];
+        } else if(chord.includes("C") && chord.includes("#")) {
+            selection = ["ré♭", "fá", "lá♭"];
+        } else if(chord.includes("D") && !chord.includes("#")) {
+            selection = ["ré", "fá#", "lá"];
+        } else if(chord.includes("D") && chord.includes("#")) {
+            selection = ["mi♭", "sol", "si♭"];
+        } else if(chord.includes("E")) {
+            selection = ["mi", "sol#", "si"];
+        } else if(chord.includes("F") && !chord.includes("#")) {
+            selection = ["fá", "lá", "dó"];
+        } else if(chord.includes("F") && chord.includes("#")) {
+            selection = ["sol♭", "si♭", "ré♭"];
+        } else if(chord.includes("G") && !chord.includes("#")) {
+            selection = ["sol", "si", "ré"];
+        } else if(chord.includes("G") && chord.includes("#")) {
+            selection = ["lá♭", "dó", "mi♭"];
+        } else if(chord.includes("A") && !chord.includes("#")) {
+            selection = ["lá", "dó#", "mi"];
+        } else if(chord.includes("A") && chord.includes("#")) {
+            selection = ["si♭", "ré", "fá"];
+        } else if(chord.includes("B")) {
+            selection = ["si", "ré#", "fá#"];
         }
-      //  isBemol = false;
-       // updateAllNotes();
-        if(chord == "F") {
-            isBemol = true;
-            updateAllNotes();
-        }
-        selection.push(allNotes[fundIndex]);
-        selection.push(allNotes[fundIndex + 4]);
-        selection.push(allNotes[fundIndex + 7]);
-
-        if(selection[0] == undefined) {
-            //selection = ["fá", "lá", "dó"];
-        }
-    }
-
-    if(chord.includes("7")) {
-        selection.push(allNotes[fundIndex + 10]);
-    }
-    if(chord.includes("9")) {
-        selection.push(allNotes[fundIndex + 2]);
     }
     
+    if(chord.includes("7")) {
+        if(chord.includes("C") || chord.includes("D#") || chord.includes("F") || chord.includes("A#") || chord.includes("B")) {
+            isBemol = true;
+            updateAllNotes();
+        } else {
+            isBemol = true;
+            updateAllNotes();
+        }
+        if(chord.includes("C#")) {
+            selection.push("si")
+        } else if(chord.includes("D#")) {
+            selection.push("ré♭") 
+        } else if(chord.includes("F#")) {
+            selection.push("mi")
+        } else if(chord.includes("G#")) {
+            selection.push("fá#")
+        } else if(chord.includes("G")) {
+            selection.push("fá")
+        } else if(chord.includes("A#")) {
+            selection.push("lá♭")
+        } else { 
+            selection.push(allNotes[fundIndex + 10]);
+        }
+    }
+    if(chord.includes("9")) {
+        
+        if(chord.includes("C#")) {
+            selection.push("mi♭")
+        } else if(chord.includes("D#")) {
+            selection.push("fá") 
+        } else if(chord.includes("F#")) {
+            selection.push("sol♭") 
+        } else if(chord.includes("G#")) {
+            selection.push("si♭") 
+        } else if(chord.includes("B")) {
+            selection.push("dó#") 
+        }else {
+            selection.push(allNotes[fundIndex + 2]);
+        }
+        
+    }
+
     return selection;
+    
 }
 
 function pressNote() {
@@ -1472,6 +1525,7 @@ function setChord() {
         }
     }
     setMode();
+    disableStrings();
     colorTriggers();
 }
  
