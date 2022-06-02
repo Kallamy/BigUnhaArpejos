@@ -129,6 +129,7 @@ function updateFormat() {
         }
     }
 }
+
 function goToNextFormat() {
     //currentFormat = chrd.current;
     currentFormat ++;
@@ -373,6 +374,7 @@ if(chordIndex == 0) {
 playButton = document.querySelector(".btnPlay")
 
 playButton.disabled = true;
+document.querySelector("#goLeft").disabled = true;
 removeButtons.forEach((removeButton) => {
     removeButton.addEventListener("click", (e) => {
         for(let i = 0; i < chordItens.length; i++) {
@@ -722,6 +724,11 @@ function getScaleNotes(fund) {
 }
 
 // Get the notes of the chord
+
+function changeNotePosition(arr, from, to) {
+    arr. splice(to, 0, arr. splice(from, 1)[0]);
+    return arr;
+};
 function getChordNotes(fund) {
     fundIndex = allNotes.indexOf(fund);
 
@@ -733,10 +740,10 @@ function getChordNotes(fund) {
         if(chord.includes("C") && !chord.includes("#")) {
             selection = ["dó", "mi♭", "sol"];
         } else if(chord.includes("C") && chord.includes("#")) {
-            selection = ["ré♭", "mi", "lá♭"];
+            selection = ["dó#", "mi", "lá♭"];
         } else if(chord.includes("D") && !chord.includes("#")) {
             selection = ["ré", "fá", "lá"];
-        } else if(chord.includes("C") && chord.includes("#")) {
+        } else if(chord.includes("D") && chord.includes("#")) {
             selection = ["mi♭", "sol♭", "si♭"];
         } else if(chord.includes("E")) {
             selection = ["mi", "sol", "si"];
@@ -755,12 +762,13 @@ function getChordNotes(fund) {
         } else if(chord.includes("B")) {
             selection = ["si", "ré", "fá#"];
         }
+
     } else if(!chord.includes("m")){
         
         if(chord.includes("C") && !chord.includes("#")) {
             selection = ["dó", "mi", "sol"];
         } else if(chord.includes("C") && chord.includes("#")) {
-            selection = ["ré♭", "fá", "lá♭"];
+            selection = ["dó#", "fá", "lá♭"];
         } else if(chord.includes("D") && !chord.includes("#")) {
             selection = ["ré", "fá#", "lá"];
         } else if(chord.includes("D") && chord.includes("#")) {
@@ -809,13 +817,16 @@ function getChordNotes(fund) {
         }
     }
     if(chord.includes("9")) {
-        
+        if(chord.includes("E") || chord.includes("A#")) {
+            isBemol = false;
+            updateAllNotes();
+        }
         if(chord.includes("C#")) {
-            selection.push("mi♭")
+            selection.push("ré#")
         } else if(chord.includes("D#")) {
             selection.push("fá") 
         } else if(chord.includes("F#")) {
-            selection.push("sol♭") 
+            selection.push("fá#") 
         } else if(chord.includes("G#")) {
             selection.push("si♭") 
         } else if(chord.includes("B")) {
@@ -823,6 +834,17 @@ function getChordNotes(fund) {
         }else {
             selection.push(allNotes[fundIndex + 2]);
         }
+
+        if(!chord.includes("7")) {
+           selection = changeNotePosition(selection, 3, 1)
+        } else {
+           selection = changeNotePosition(selection, 4, 1)
+        }
+
+        if(chord.includes("F#")) {
+            selection = changeNotePosition(selection, 1, 0)
+        }
+
         
     }
 
@@ -1643,16 +1665,19 @@ function playSequence() {
         tabNums[i].classList.remove('playing');
 
         setTimeout(() => {
+            playingNotes = document.querySelectorAll(".tabNum.playing");
             playNote(string, pos)
             selectedNotes[i].classList.remove('playing');
+
             selectedNotes[i].offsetWidth;
             selectedNotes[i].classList.add('playing');
+            notesCount = playingNotes.length;
             
             tabNums[i].classList.remove('playing');
             tabNums[i].offsetWidth;
             tabNums[i].classList.add('playing');
             
-            
+            console.log(notesCount)
                 
                 if(i >= (18 * pageNum)) {
                     document.querySelector(".tabSequence").style.left = `${-550*pageNum}px`;
@@ -1661,11 +1686,14 @@ function playSequence() {
                     }
                 }
                 if(i == selectedNotes.length -1) {
+                    notesCount--
                     setTimeout(() => {
+                        console.log(notesCount)
+                        if(notesCount < 3) {
                             document.querySelector(".tabArea").style.display = "none";
                             document.querySelector(".tabSequence").style.left = "3px";
                             count--;
-                            
+                        }
                     }, 2000)
                 }
         }, time * count)
