@@ -374,7 +374,8 @@ if(chordIndex == 0) {
 playButton = document.querySelector(".btnPlay")
 
 playButton.disabled = true;
-document.querySelector("#goLeft").disabled = true;
+nextFormat.disabled = true;
+prevFormat.disabled = true;
 removeButtons.forEach((removeButton) => {
     removeButton.addEventListener("click", (e) => {
         for(let i = 0; i < chordItens.length; i++) {
@@ -402,6 +403,9 @@ removeButtons.forEach((removeButton) => {
         }
         colorTriggers();
         playButton.disabled = true;
+        nextFormat.disabled = true;
+        prevFormat.disabled = true;
+        document.querySelector("#chordNumber").innerText = 1;
     })
 })
 
@@ -434,7 +438,9 @@ chordItens.forEach((chordItem) => {
         removeButtons[chordIndex].style.zIndex = "99";
         
         playButton.disabled = false;
-        
+        nextFormat.disabled = false;
+        prevFormat.disabled = false;
+
         for(var i = 0; i < chordObj.length; i++) {
             if(chordObj[i].acronym == chord) {
                 chrd = chordObj[i];
