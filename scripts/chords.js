@@ -58,7 +58,7 @@ if(c != ""){
                     nut: [1,6],
                     disabled: [],
                     current: 1,
-                    variants: [["x2", 0], ["x3", 0], ["x4", 0], ["x5", 1], ["E♭", 2], ["C#", 4]]
+                    variants: [["x1", 0], ["x2", 0], ["x3", 0], ["x5", 1], ["E♭", 2], ["C#", 4]]
                 },
                 {
                     acronym: "F#",
@@ -143,10 +143,10 @@ if(c != ""){
                 },
                 {
                     acronym: "x4",
-                    positions: [0,0,2,3,0,0],
-                    fingers: [0,0,2,3,0,0],
-                    nut: [1, 2],
-                    disabled: [6, 1],
+                    positions: [0,2,0,3,4,0],
+                    fingers: [0,2,0,3,4,0],
+                    nut: [1, 3],
+                    disabled: [6],
                     current: 1,
                     variants: []
                 },
@@ -188,7 +188,7 @@ if(c != ""){
                     nut: null,
                     disabled: [6,5],
                     current: 1,
-                    variants: [["C#7", 2], ["B♭7", 4], ["F7", 9]]
+                    variants: [["C#7", 1], ["B♭7", 4], ["F7", 9]]
                 },
                 {
                     acronym: "E♭7",
@@ -197,7 +197,7 @@ if(c != ""){
                     nut: null,
                     disabled: [6,5],
                     current: 1,
-                    variants: [["C#7", 3], ["B♭7", 5], ["F7", 10]]
+                    variants: [["C#7", 2], ["B♭7", 5], ["F7", 10]]
                 },
                 {
                     acronym: "E7",
@@ -751,7 +751,7 @@ if(c != ""){
                         nut: [3,5],
                         disabled: [6],
                         current: 1,
-                        variants: [["Fm7", 7], ["E♭m7", 9]]
+                        variants: [["Fm7", 7], ["E♭m7", 8]]
                     },
                     {
                         acronym: "C#m7",
@@ -760,7 +760,7 @@ if(c != ""){
                         nut: [4,5],
                         disabled: [6],
                         current: 1,
-                        variants: [["Fm7", 8], ["E♭m7", 10]]
+                        variants: [["Fm7", 8], ["E♭m7", ]]
                     },
                     {
                         acronym: "Dm7",
