@@ -96,6 +96,10 @@ var eh14 = new Audio("./audio/eh14.wav");
 
 // Mode change
 let mode = "chords";
+
+chord = "";
+takeChord(chord)
+
 disabledStrings = [];
 strings = document.querySelectorAll(".string");
 strings = [...strings];
@@ -126,6 +130,7 @@ function updateFormat() {
     for(var i = 0; i < chordObj.length; i++) {
         if(chordObj[i].acronym == chord) {
             chrd = chordObj[i];
+            
         }
     }
 }
@@ -133,6 +138,7 @@ function updateFormat() {
 function goToNextFormat() {
     //currentFormat = chrd.current;
     currentFormat ++;
+
     if(currentFormat > chrd.variants.length + 1) {
         currentFormat = 1;
     }
@@ -270,8 +276,7 @@ function setMode() {
  
 
 //Initial settings
-chord = "";
-takeChord(chord)
+
 hasLoad = false;
 isBemol = false;
 triggerBtns = document.querySelectorAll(".triggerButton");
@@ -280,6 +285,7 @@ chordPositions = [0,0,0,0,0,0];
 chordPositions = [0,0,0,0,0,0];
 nut_position = 0;
 nutPosition = 0;
+nutPos = [0,0]
 nutDegree = 0;
 initialChordPositions = [0,0,0,0,0,0];
 chordFingers = [0,0,0,0,0,0];
@@ -427,6 +433,7 @@ chordItens.forEach((chordItem) => {
         clearNotes();
         setNotes();
         //notes = getChordNotes(); 
+       
         setChord();
         setMode();
         targetChord = chordItem.innerText;
@@ -455,8 +462,9 @@ chordItens.forEach((chordItem) => {
                 chrd = chordObj[i];
              
 
+                currentFormat = chrd.current;
+                console.log(chrd.current)
             }
-            currentFormat = chrd.current;
            document.querySelector("#chordNumber").innerText = currentFormatNumber;
            currentFormatNumber = chrd.current;
         }
@@ -755,7 +763,7 @@ function getChordNotes(fund) {
         if(chord.includes("C") && !chord.includes("#")) {
             selection = ["dó", "mi♭", "sol"];
         } else if(chord.includes("C") && chord.includes("#")) {
-            selection = ["dó#", "mi", "lá♭"];
+            selection = ["dó#", "mi", "sol#"];
         } else if(chord.includes("D")) {
             selection = ["ré", "fá", "lá"];
         } else if(chord.includes("E") && chord.includes("♭")) {
@@ -765,7 +773,7 @@ function getChordNotes(fund) {
         } else if(chord.includes("F") && !chord.includes("#")) {
             selection = ["fá", "lá♭", "dó"];
         } else if(chord.includes("F") && chord.includes("#")) {
-            selection = ["sol♭", "lá", "ré♭"];
+            selection = ["fá#", "lá", "dó#"];
         } else if(chord.includes("G")) {
             selection = ["sol", "si♭", "ré"];
         } else if(chord.includes("A") && chord.includes("♭")) {
@@ -783,7 +791,7 @@ function getChordNotes(fund) {
         if(chord.includes("C") && !chord.includes("#")) {
             selection = ["dó", "mi", "sol"];
         } else if(chord.includes("C") && chord.includes("#")) {
-            selection = ["dó#", "fá", "lá♭"];
+            selection = ["dó#", "mi#", "sol#"];
         } else if(chord.includes("D")) {
             selection = ["ré", "fá#", "lá"];
         } else if(chord.includes("E") && chord.includes("♭")) {
@@ -793,7 +801,7 @@ function getChordNotes(fund) {
         } else if(chord.includes("F") && !chord.includes("#")) {
             selection = ["fá", "lá", "dó"];
         } else if(chord.includes("F") && chord.includes("#")) {
-            selection = ["sol♭", "si♭", "ré♭"];
+            selection = ["fá#", "lá#", "dó#"];
         } else if(chord.includes("G")) {
             selection = ["sol", "si", "ré"];
         } else if(chord.includes("A") && chord.includes("♭")) {
@@ -836,12 +844,16 @@ function getChordNotes(fund) {
             isBemol = false;
             updateAllNotes();
         }
+        if(chord.includes("F")) {
+            isBemol = true;
+            updateAllNotes();
+        }
         if(chord.includes("C#")) {
             selection.push("ré#")
         } else if(chord.includes("E♭")) {
             selection.push("fá") 
         } else if(chord.includes("F#")) {
-            selection.push("fá#") 
+            selection.push("sol#") 
         } else if(chord.includes("A♭")) {
             selection.push("si♭") 
         } else if(chord.includes("B")) {
@@ -1017,6 +1029,7 @@ function pressNote() {
                         if(canPress) {
                             if(pressedFret.getAttribute("data-pos") != chordPositions[stringId-1] /* && pressedFret.getAttribute("data-pos") >= nut_position */) {
                                 fret.classList.add("pressed"); 
+                                colorTriggers();
                             } else {
                                 pressedFret.classList.remove("pressed"); 
                                 fret.classList.remove("firstFinger");
@@ -1117,20 +1130,32 @@ function pressNote() {
 
 chrd = [];
 chrdVar = [];
+
+function getCurrentFormat() {
+    for(let i = 0; i < chordObj.length; i++) {
+        if(chordObj[i].acronym == chord) {
+            chrd = chordObj[i];
+        }
+        console.log(chrd.current)
+        currentFormat = chrd.current;
+    }
+}
 function drawChord() {
     disabled = [],
     removeChord()
+    getCurrentFormat();
     takeChord(chord)
     disableStrings();
     frets = document.querySelectorAll(".fret");
     triggerBtns = document.querySelectorAll(".triggerButton");
     chordVariant = chord;
+    
     for(let i = 0; i < chordObj.length; i++) {
 
+      
         if(chordObj[i].acronym == chord) {
             chrd = chordObj[i];
            // document.querySelector("#chordNumber").innerText = chrd.current;
-           
         }
         
         if(currentFormat > 1) {
@@ -1143,7 +1168,12 @@ function drawChord() {
         }
         if(chordObj[i].acronym == chord) {
             chrd = chordObj[i];
+            if(currentFormat > chrd.variants.length) {
+                currentFormat = chrd.variants.length;
+            }
+            chrd.current = currentFormat;
         }
+       
     }
 
     chordRef = {}
@@ -1166,7 +1196,9 @@ function drawChord() {
             chordRef.nut = [0,0]
         }
 
-     
+        //chordRef.current = currentFormat;
+    
+
         fret.classList.remove("pressed");
 
         for(let i = 0; i < chordRef.positions.length; i++) {
@@ -1387,6 +1419,7 @@ function drawChord() {
     }
     playPositions = chordPositions;
     // nut_position = nutPosition
+    
 }
 
 function disableStrings() {
@@ -1615,7 +1648,7 @@ function setChord() {
     }
     hasLoad = true;
     setNotes();
-
+    
     chordItens.forEach((chordItem) => {
         if(chordItem.innerText == chord) {
             
@@ -1633,6 +1666,7 @@ function setChord() {
     if(mode == "chords") {
         if(chordIndex != 0) {
             removeChord();
+
             drawChord();
         }
     }

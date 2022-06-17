@@ -1,0 +1,6 @@
+Chord with some problems:
+
+F, 
+A9, B♭9, Bm9, 
+E♭7(9), F7(9), B♭7(9),
+Cm7(9), Em7(9)
