@@ -463,7 +463,6 @@ chordItens.forEach((chordItem) => {
              
 
                 currentFormat = chrd.current;
-                console.log(chrd.current)
             }
            document.querySelector("#chordNumber").innerText = currentFormatNumber;
            currentFormatNumber = chrd.current;
@@ -929,15 +928,10 @@ function pressNote() {
                                     if(nutPos > 0 && nutDegree < stringId) {
                                          pressedPositions[stringId-1] = nut_position;
                                     } else {
-                                        triggers[stringId-1].innerText = defaultNotes[stringId-1]; 
-                                        pressedPositions[stringId-1] = 0;
                                         if(!disabledStrings.includes(parseInt(stringId))) {
-                                            if(stringId-1 > nutDegree) {
-                                            } else {
-                                
-                                            }
+                                            triggers[stringId-1].innerText = defaultNotes[stringId-1]; 
                                         }
-                                        //playPositions[stringId-1] = 0;
+                                        pressedPositions[stringId-1] = 0;
                                     }
                                 } 
                             }
@@ -945,10 +939,8 @@ function pressNote() {
                             playPositions = pressedPositions;
                         }
                     }
-                    
-                    
                 })
-        
+                
                 if(!disabledStrings.includes(parseInt(stringId)) && pressedPositions[stringId-1] >= nut_position) {
                     canPress = true
                 } else {
@@ -1136,7 +1128,6 @@ function getCurrentFormat() {
         if(chordObj[i].acronym == chord) {
             chrd = chordObj[i];
         }
-        console.log(chrd.current)
         currentFormat = chrd.current;
     }
 }
@@ -1152,10 +1143,15 @@ function drawChord() {
     
     for(let i = 0; i < chordObj.length; i++) {
 
-      
+        if(chordObj[i].variants.length > 0 ) {
+            "Este acorde não possui variantes."
+        }
+        //console.log(chordObj[i].variants.length)
+
         if(chordObj[i].acronym == chord) {
             chrd = chordObj[i];
            // document.querySelector("#chordNumber").innerText = chrd.current;
+           
         }
         
         if(currentFormat > 1) {
@@ -1168,9 +1164,6 @@ function drawChord() {
         }
         if(chordObj[i].acronym == chord) {
             chrd = chordObj[i];
-            if(currentFormat > chrd.variants.length) {
-                currentFormat = chrd.variants.length;
-            }
             chrd.current = currentFormat;
         }
        
@@ -1367,7 +1360,7 @@ function drawChord() {
             frts = strings[s].querySelectorAll(".fret");
            
             for(let t = 0; t <frts.length; t++) {
-                
+                triggerBtns[s].classList.remove("blocked");
                 if(t+1 == chordPositions[s]) {
                     triggerBtns[s].innerText = frts[t].getAttribute('data-note');
                 
@@ -1407,7 +1400,7 @@ function drawChord() {
                     }
 
                     if(disabledStrings.includes(string)) {
-                        triggerBtns[5].innerText = "x";
+                       // triggerBtns[5].innerText = "x";
                     }
                 }
             }
@@ -1426,14 +1419,17 @@ function disableStrings() {
     triggers = document.querySelectorAll(".triggerButton");
     allStrings = document.querySelectorAll(".string");
     for(let i = 0; i < 7; i++) {
-        if(disabledStrings.includes(i+1)) {
-            triggers[i].innerText = "x";
-           // triggers[i].style.backgroundColor = "#ccc5b9";
-           // triggers[i].style.fontWeight = "bold";
-
+        var x = i;
+       // triggers[x].classList.remove("blocked");
+        if(disabledStrings.includes(x+1)) {
+            triggers[x].innerText = "x";
+            // triggers[i].style.backgroundColor = "#ccc5b9";
+            //triggers[i].style.fontWeight = "bold";
+            triggers[x].classList.add("blocked");
+        } else {
         }
         //colorTriggers();
-    }
+    } 
     allStrings.forEach(string => {
         if(disabledStrings.includes(parseInt(string.getAttribute("data-id")))) {
             // string.style.backgroundColor = "red";
@@ -1578,6 +1574,17 @@ function setChord() {
     
 
     chordItensList = [];
+    for(let i = 0; i < chordObj.length; i++) {
+
+        if(chordObj[i].acronym == chord) {
+            chrd = chordObj[i];
+            if(currentFormat > chrd.variants.length + 1) {
+                chrd.current = chrd.variants.length + 1;
+            }
+            document.querySelector("#chordNumber").innerText = currentFormat;
+        }
+    
+    }
 
     for(var i = 0; i < chordItens.length; i++) {
         chordItens[i].classList.remove("selected")
